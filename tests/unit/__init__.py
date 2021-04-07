@@ -1489,38 +1489,59 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Manager access code will be sent by post - Census 2021</title>'
         self.content_request_code_sent_by_post_page_title_individual_en = \
             '<title>Individual access code will be sent by post - Census 2021</title>'
-        self.content_request_code_sent_post_title_en = \
+        self.content_request_code_hh_region_e_sent_post_title_en = \
+            'A letter will be sent to Bob Bobbington at 1 Main Street, Upper Upperingham'
+        self.content_request_code_hh_region_w_sent_post_title_en = \
+            'A letter will be sent to Bob Bobbington at 1 West Street, West Westingham'
+        self.content_request_code_spg_region_e_sent_post_title_en = \
+            'A letter will be sent to Bob Bobbington at 2 Main Street, Upper Upperingham'
+        self.content_request_code_spg_region_w_sent_post_title_en = \
+            'A letter will be sent to Bob Bobbington at 2 West Street, West Westingham'
+        self.content_request_code_aims_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_code_sent_post_title_ce_en = \
-            'A letter will be sent to Bob Bobbington at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_code_sent_post_title_ce_with_room_en = \
+        self.content_request_code_region_e_sent_post_title_ce_en = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Upton University'
+        self.content_request_code_region_w_sent_post_title_ce_en = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Weston University'
+        self.content_request_code_region_e_sent_post_title_ce_with_room_en = \
             'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
-        self.content_request_code_sent_post_title_ce_with_room_long_surname_en = \
+            'Upton University'
+        self.content_request_code_region_w_sent_post_title_ce_with_room_en = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Weston University'
+        self.content_request_code_region_e_sent_post_title_ce_with_room_long_surname_en = \
             'A letter will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
-            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'at Halls Of Residence, Upton University'
+        self.content_request_code_region_w_sent_post_title_ce_with_room_long_surname_en = \
+            'A letter will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'at Halls Of Residence, Weston University'
         self.content_request_code_sent_post_secondary_individual_en = \
             'The letter with an individual access code for you to start the census should arrive within 5 working days'
         self.content_request_code_sent_post_secondary_manager_en = \
             'The letter with a new manager access code for you to start the census should arrive within 5 working days'
         self.content_request_code_sent_post_secondary_household_en = \
-            'The letter with a new household access code for you to start the census should arrive within 5 working days'
+            'The letter with a new household access code for you to start the census should arrive ' \
+            'within 5 working days'
         self.content_request_code_sent_by_post_page_title_household_cy = \
             '<title>Caiff cod mynediad y cartref ei anfon drwy&#39;r post - Cyfrifiad 2021</title>'
         self.content_request_code_sent_by_post_page_title_manager_cy = \
             '<title>Caiff cod mynediad rheolwr ei anfon drwy&#39;r post - Cyfrifiad 2021</title>'
         self.content_request_code_sent_by_post_page_title_individual_cy = \
             '<title>Caiff cod mynediad unigol ei anfon drwy&#39;r post - Cyfrifiad 2021</title>'
-        self.content_request_code_sent_post_title_cy = \
+        self.content_request_code_hh_sent_post_title_cy = \
+            'Caiff llythyr ei anfon at Bob Bobbington yn 1 West Street, West Westingham'
+        self.content_request_code_spg_sent_post_title_cy = \
+            'Caiff llythyr ei anfon at Bob Bobbington yn 2 West Street, West Westingham'
+        self.content_request_code_aims_sent_post_title_cy = \
             'Caiff llythyr ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter'
         self.content_request_code_sent_post_title_ce_cy = \
-            "Caiff llythyr ei anfon at Bob Bobbington yn Halls Of Residence, Cumbria College Of Art &amp; Design"
+            "Caiff llythyr ei anfon at Bob Bobbington yn Halls Of Residence, Weston University"
         self.content_request_code_sent_post_title_ce_with_room_cy = \
             "Caiff llythyr ei anfon at Bob Bobbington, Room A8 yn Halls Of Residence, " \
-            "Cumbria College Of Art &amp; Design"
+            "Weston University"
         self.content_request_code_sent_post_title_ce_with_room_long_surname_cy = \
             "Caiff llythyr ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe " \
-            "yn Halls Of Residence, Cumbria College Of Art &amp; Design"
+            "yn Halls Of Residence, Weston University"
         self.content_request_code_sent_post_secondary_individual_cy = \
             "Dylai\\\'r llythyr gyda chod mynediad unigol i chi ddechrau\\\'r cyfrifiad " \
             "gyrraedd cyn pen 5 diwrnod gwaith"
@@ -1530,8 +1551,18 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_code_sent_post_secondary_household_cy = \
             "Dylai\\\'r llythyr gyda chod mynediad cartref newydd i chi ddechrau\\\'r cyfrifiad " \
             "gyrraedd cyn pen 5 diwrnod gwaith"
-        self.content_request_code_sent_post_title_ni = \
+        self.content_request_code_rhsvc_sent_post_title_ni = \
+            'A letter will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
+        self.content_request_code_aims_sent_post_title_ni = \
             'A letter will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_code_sent_post_title_ce_ni = \
+            'A letter will be sent to Bob Bobbington at Halls Of Residence, Lowton University'
+        self.content_request_code_sent_post_title_ce_with_room_long_surname_ni = \
+            'A letter will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'at Halls Of Residence, Lowton University'
+        self.content_request_code_sent_post_title_ce_with_room_ni = \
+            'A letter will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Lowton University'
 
         self.content_request_contact_centre_en = 'You need to call the Census customer contact centre'
         self.content_request_contact_centre_cy = "Mae angen i chi ffonio canolfan gyswllt cwsmeriaid y cyfrifiad"
@@ -2257,47 +2288,112 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Large-print household paper questionnaire will be sent - Census 2021</title>'
         self.content_request_questionnaire_sent_post_individual_page_title_large_print_en = \
             '<title>Large-print individual paper questionnaire will be sent - Census 2021</title>'
-        self.content_request_questionnaire_sent_post_title_en = \
-            'A household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_questionnaire_sent_post_individual_title_en = \
-            'An individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_questionnaire_sent_post_title_large_print_en = \
-            'A large-print household paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_questionnaire_sent_post_individual_title_large_print_en = \
-            'A large-print individual paper questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
-        self.content_request_questionnaire_sent_post_title_ce_en = \
+        self.content_request_pq_rhsvc_region_e_hh_sent_post_title_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington at 1 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_w_hh_sent_post_title_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington at 1 West Street, West Westingham'
+        self.content_request_pq_rhsvc_region_e_spg_sent_post_title_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington at 2 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_w_spg_sent_post_title_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington at 2 West Street, West Westingham'
+        self.content_request_pq_rhsvc_region_e_hh_sent_post_individual_title_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 1 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_e_spg_sent_post_individual_title_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 2 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_w_hh_sent_post_individual_title_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 1 West Street, West Westingham'
+        self.content_request_pq_rhsvc_region_w_spg_sent_post_individual_title_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 2 West Street, West Westingham'
+        self.content_request_pq_rhsvc_region_e_hh_sent_post_title_lp_en = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at ' \
+            '1 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_w_hh_sent_post_title_lp_en = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at ' \
+            '1 West Street, West Westingham'
+        self.content_request_pq_rhsvc_region_e_spg_sent_post_title_lp_en = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at ' \
+            '2 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_w_spg_sent_post_title_lp_en = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at ' \
+            '2 West Street, West Westingham'
+        self.content_request_pq_rhsvc_region_e_hh_sent_post_individual_title_lp_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at ' \
+            '1 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_w_hh_sent_post_individual_title_lp_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at ' \
+            '1 West Street, West Westingham'
+        self.content_request_pq_rhsvc_region_e_spg_sent_post_individual_title_lp_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at ' \
+            '2 Main Street, Upper Upperingham'
+        self.content_request_pq_rhsvc_region_w_spg_sent_post_individual_title_lp_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at ' \
+            '2 West Street, West Westingham'
+        self.content_request_pq_region_e_sent_post_title_ce_en = \
             'A household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_individual_title_ce_en = \
+            'Upton University'
+        self.content_request_pq_region_w_sent_post_title_ce_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Weston University'
+        self.content_request_pq_region_e_sent_post_individual_title_ce_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_title_ce_with_room_en = \
+            'Upton University'
+        self.content_request_pq_region_w_sent_post_individual_title_ce_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Weston University'
+        self.content_request_pq_region_e_sent_post_title_ce_with_room_en = \
             'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_indi_title_ce_room_en = \
+            'Upton University'
+        self.content_request_pq_region_w_sent_post_title_ce_with_room_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Weston University'
+        self.content_request_pq_region_e_sent_indi_title_ce_room_en = \
             'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_title_ce_room_long_last_en = \
+            'Upton University'
+        self.content_request_pq_region_w_sent_indi_title_ce_room_en = \
+            'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Weston University'
+        self.content_request_pq_region_e_sent_title_ce_room_long_last_en = \
             'A household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en = \
+            'Room A8 at Halls Of Residence, Upton University'
+        self.content_request_pq_region_w_sent_title_ce_room_long_last_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Weston University'
+        self.content_request_pq_region_e_sent_indi_title_ce_room_long_last_en = \
             'An individual paper questionnaire will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
-            'at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_title_large_print_ce_en = \
+            'at Halls Of Residence, Upton University'
+        self.content_request_pq_region_w_sent_indi_title_ce_room_long_last_en = \
+            'An individual paper questionnaire will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'at Halls Of Residence, Weston University'
+        self.content_request_pq_rhsvc_region_e_sent_post_title_lp_ce_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_en = \
+            'Upton University'
+        self.content_request_pq_rhsvc_region_w_sent_post_title_lp_ce_en = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Weston University'
+        self.content_request_pq_rhsvc_region_e_sent_post_individual_title_lp_ce_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_title_large_print_ce_room_en = \
+            'Upton University'
+        self.content_request_pq_rhsvc_region_w_sent_post_individual_title_lp_ce_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Weston University'
+        self.content_request_pq_rhsvc_region_e_sent_title_lp_ce_room_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_indi_title_lp_ce_room_en = \
+            'Room A8 at Halls Of Residence, Upton University'
+        self.content_request_pq_rhsvc_region_w_sent_title_lp_ce_room_en = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
+            'Room A8 at Halls Of Residence, Weston University'
+        self.content_request_pq_region_e_sent_indi_title_lp_ce_room_en = \
             'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
-        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en = \
+            'Room A8 at Halls Of Residence, Upton University'
+        self.content_request_pq_region_w_sent_indi_title_lp_ce_room_en = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington, ' \
+            'Room A8 at Halls Of Residence, Weston University'
+        self.content_request_pq_region_e_sent_post_title_lp_ce_room_long_last_en = \
             'A large-print household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
-            'Room A8 at Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'Room A8 at Halls Of Residence, Upton University'
+        self.content_request_pq_region_w_sent_post_title_lp_ce_room_long_last_en = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Weston University'
         self.content_request_questionnaire_sent_post_secondary_en = \
             'This should arrive within 5 working days for you to complete your census'
 
@@ -2309,58 +2405,104 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Caiff copi print mawr o holiadur papur y cartref ei anfon - Cyfrifiad 2021</title>'
         self.content_request_questionnaire_sent_post_individual_page_title_large_print_cy = \
             "<title>Caiff copi print mawr o&#39;r holiadur papur i unigolion ei anfon - Cyfrifiad 2021</title>"
-        self.content_request_questionnaire_sent_post_title_cy = \
-            "Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
-        self.content_request_questionnaire_sent_post_individual_title_cy = \
+        self.content_request_pq_rhsvc_hh_sent_post_title_cy = \
+            "Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn 1 West Street, West Westingham"
+        self.content_request_pq_rhsvc_spg_sent_post_title_cy = \
+            "Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn 2 West Street, West Westingham"
+        self.content_request_pq_rhsvc_hh_sent_post_individual_title_cy = \
+            "Caiff holiadur papur i unigolion ei anfon at Bob Bobbington yn 1 West Street, West Westingham"
+        self.content_request_pq_rhsvc_spg_sent_post_individual_title_cy = \
+            "Caiff holiadur papur i unigolion ei anfon at Bob Bobbington yn 2 West Street, West Westingham"
+        self.content_request_pq_aims_sent_post_individual_title_cy = \
             "Caiff holiadur papur i unigolion ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
-        self.content_request_questionnaire_sent_post_title_large_print_cy = \
-            "Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
-        self.content_request_questionnaire_sent_post_individual_title_large_print_cy = \
-            "Caiff copi print mawr o\\\'r holiadur papur i unigolion ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
+        self.content_request_pq_rhsvc_hh_sent_post_title_lp_cy = \
+            "Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington yn " \
+            "1 West Street, West Westingham"
+        self.content_request_pq_rhsvc_spg_sent_post_title_lp_cy = \
+            "Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington yn " \
+            "2 West Street, West Westingham"
+        self.content_request_pq_rhsvc_hh_sent_post_individual_title_lp_cy = \
+            "Caiff copi print mawr o\\\'r holiadur papur i unigolion ei anfon at Bob Bobbington yn " \
+            "1 West Street, West Westingham"
+        self.content_request_pq_rhsvc_spg_sent_post_individual_title_lp_cy = \
+            "Caiff copi print mawr o\\\'r holiadur papur i unigolion ei anfon at Bob Bobbington yn " \
+            "2 West Street, West Westingham"
         self.content_request_questionnaire_sent_post_title_ce_cy = \
             'Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
+            'Weston University'
         self.content_request_questionnaire_sent_post_individual_title_ce_cy = \
             'Caiff holiadur papur i unigolion ei anfon at Bob Bobbington yn Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
+            'Weston University'
         self.content_request_questionnaire_sent_title_ce_with_room_cy = \
             "Caiff holiadur papur y cartref ei anfon at Bob Bobbington, Room A8 yn Halls Of Residence, " \
-            "Cumbria College Of Art &amp; Design"
+            "Weston University"
         self.content_request_questionnaire_sent_individual_title_ce_with_room_cy = \
             'Caiff holiadur papur i unigolion ei anfon at Bob Bobbington, Room A8 yn Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
+            'Weston University'
         self.content_request_questionnaire_sent_title_ce_with_room_long_last_cy = \
             'Caiff holiadur papur y cartref ei anfon at Bob Bobbington-Fortesque-Smythe, ' \
-            'Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'Room A8 yn Halls Of Residence, Weston University'
         self.content_request_questionnaire_sent_indi_title_ce_room_long_last_cy = \
             'Caiff holiadur papur i unigolion ei anfon at Room A8 Bob Bobbington-Fortesque-Smythe ' \
-            'yn Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'yn Halls Of Residence, Weston University'
         self.content_request_questionnaire_sent_post_title_large_print_ce_cy = \
             'Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington yn Halls Of Residence, ' \
-            'Cumbria College Of Art &amp; Design'
+            'Weston University'
         self.content_request_questionnaire_sent_post_individual_title_large_print_ce_cy = \
             "Caiff copi print mawr o\\\'r holiadur papur i unigolion ei anfon at Bob Bobbington yn " \
-            "Halls Of Residence, Cumbria College Of Art &amp; Design"
+            "Halls Of Residence, Weston University"
         self.content_request_questionnaire_sent_title_lp_ce_room_cy = \
             "Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington, Room A8 yn " \
-            "Halls Of Residence, Cumbria College Of Art &amp; Design"
+            "Halls Of Residence, Weston University"
         self.content_request_questionnaire_sent_indi_title_lp_ce_room_cy = \
             "Caiff copi print mawr o\\\'r holiadur papur i unigolion ei anfon at Bob Bobbington, Room A8 yn " \
-            "Halls Of Residence, Cumbria College Of Art &amp; Design"
+            "Halls Of Residence, Weston University"
         self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_cy = \
             'Caiff copi print mawr o holiadur papur y cartref ei anfon at Bob Bobbington-Fortesque-Smythe, ' \
-            'Room A8 yn Halls Of Residence, Cumbria College Of Art &amp; Design'
+            'Room A8 yn Halls Of Residence, Weston University'
         self.content_request_questionnaire_sent_post_secondary_cy = \
             "Dylai hyn gyrraedd cyn pen 5 diwrnod gwaith i chi gwblhau eich cyfrifiad"
 
-        self.content_request_questionnaire_sent_post_title_ni = \
-            'A household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
-        self.content_request_questionnaire_sent_post_individual_title_ni = \
-            'An individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
-        self.content_request_questionnaire_sent_post_title_large_print_ni = \
-            'A large-print household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
-        self.content_request_questionnaire_sent_post_individual_title_large_print_ni = \
-            'A large-print individual paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
+        self.content_request_pq_rhsvc_hh_sent_post_title_ni = \
+            'A household paper questionnaire will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
+        self.content_request_pq_rhsvc_hh_sent_post_individual_title_ni = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
+        self.content_request_pq_rhsvc_hh_sent_post_title_lp_ni = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at ' \
+            '1 Side Street, Lower Loweringham'
+        self.content_request_pq_rhsvc_hh_sent_post_individual_title_lp_ni = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at ' \
+            '1 Side Street, Lower Loweringham'
+        self.content_request_pq_sent_post_individual_title_ce_ni = \
+            'An individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Lowton University'
+        self.content_request_pq_sent_post_title_ce_ni = \
+            'A household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Lowton University'
+        self.content_request_pq_sent_post_title_ce_with_room_ni = \
+            'A household paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Lowton University'
+        self.content_request_pq_sent_individual_title_ce_room_ni = \
+            'An individual paper questionnaire will be sent to Bob Bobbington, Room A8 at Halls Of Residence, ' \
+            'Lowton University'
+        self.content_request_pq_sent_title_ce_room_long_last_ni = \
+            'A household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Lowton University'
+        self.content_request_pq_sent_indi_title_ce_room_long_last_ni = \
+            'An individual paper questionnaire will be sent to Room A8 Bob Bobbington-Fortesque-Smythe ' \
+            'at Halls Of Residence, Lowton University'
+        self.content_request_pq_sent_post_title_lp_ce_ni = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Lowton University'
+        self.content_request_pq_sent_post_individual_title_lp_ce_ni = \
+            'A large-print individual paper questionnaire will be sent to Bob Bobbington at Halls Of Residence, ' \
+            'Lowton University'
+        self.content_request_pq_sent_title_lp_ce_room_ni = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington, ' \
+            'Room A8 at Halls Of Residence, Lowton University'
+        self.content_request_pq_sent_post_title_lp_ce_room_long_last_ni = \
+            'A large-print household paper questionnaire will be sent to Bob Bobbington-Fortesque-Smythe, ' \
+            'Room A8 at Halls Of Residence, Lowton University'
 
         self.content_request_questionnaire_confirm_send_by_post_page_title_en = \
             '<title>Confirm to send household paper questionnaire - Census 2021</title>'
@@ -2525,20 +2667,34 @@ class RHTestCase(AioHTTPTestCase):
         self.content_request_continuation_questionnaire_people_in_household_error_number_greater_ni = \
             'Enter a number greater than 6'
 
-        self.content_request_continuation_questionnaire_sent_post_page_title_en = \
+        self.content_request_cq_sent_post_page_title_en = \
             '<title>Continuation questionnaire will be sent - Census 2021</title>'
-        self.content_request_continuation_questionnaire_sent_post_title_en = \
+        self.content_request_cq_rhsvc_sent_post_title_hh_region_e_en = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 1 Main Street, Upper Upperingham'
+        self.content_request_cq_rhsvc_sent_post_title_hh_region_w_en = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 1 West Street, West Westingham'
+        self.content_request_cq_rhsvc_sent_post_title_spg_region_e_en = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 2 Main Street, Upper Upperingham'
+        self.content_request_cq_rhsvc_sent_post_title_spg_region_w_en = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 2 West Street, West Westingham'
+        self.content_request_continuation_questionnaire_aims_sent_post_title_en = \
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Gate Reach, Exeter'
         self.content_request_continuation_questionnaire_sent_post_secondary_en = \
             'This should arrive within 5 working days for you to complete your census'
-        self.content_request_continuation_questionnaire_sent_post_page_title_cy = \
+        self.content_request_cq_sent_post_page_title_cy = \
             '<title>Caiff holiadur y cartref (parhad) ei anfon - Cyfrifiad 2021</title>'
-        self.content_request_continuation_questionnaire_sent_post_title_cy = \
+        self.content_request_cq_rhsvc_sent_post_title_hh_cy = \
+            "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 1 West Street, West Westingham"
+        self.content_request_cq_rhsvc_sent_post_title_spg_cy = \
+            "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 2 West Street, West Westingham"
+        self.content_request_continuation_questionnaire_aims_sent_post_title_cy = \
             "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
         self.content_request_continuation_questionnaire_sent_post_secondary_cy = \
             "Dylai hyn gyrraedd cyn pen 5 diwrnod gwaith i chi gwblhau eich cyfrifiad"
 
-        self.content_request_continuation_questionnaire_sent_post_title_ni = \
+        self.content_request_cq_rhsvc_sent_post_title_hh_ni = \
+            'A continuation questionnaire will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
+        self.content_request_continuation_questionnaire_aims_sent_post_title_ni = \
             'A continuation questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_continuation_questionnaire_confirm_send_by_post_page_title_en = \

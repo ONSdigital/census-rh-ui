@@ -776,13 +776,72 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-address', display_region), contents)
             self.check_text_select_address(display_region, contents, check_error=True)
 
-    async def check_post_select_address(self, url, display_region, address_type, ai_uprn_return_value=None):
+    async def check_post_select_address(self, url, display_region, address_type, region, ce_type=None):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            if ai_uprn_return_value:
-                mocked_get_ai_uprn.return_value = ai_uprn_return_value
+            if region == 'N':
+                if address_type == 'CE':
+                    if ce_type == 'manager':
+                        mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+                    elif ce_type == 'resident':
+                        mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
+                else:
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_n
+            elif region == 'W':
+                if address_type == 'CE':
+                    if ce_type == 'manager':
+                        mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+                    elif ce_type == 'resident':
+                        mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
+                elif address_type == 'SPG':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_w
+                else:
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_w
+            else:
+                if address_type == 'CE':
+                    if ce_type == 'manager':
+                        mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+                    elif ce_type == 'resident':
+                        mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
+                elif address_type == 'SPG':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_spg_e
+                else:
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
+
+            response = await self.client.request('POST', url, data=self.common_select_address_input_valid)
+
+            self.assertLogEvent(cm, self.build_url_log_entry('select-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'GET'))
+
+            self.assertLogEvent(cm, 'case matching uprn found in RHSvc')
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('confirm-address', display_region), contents)
+            if address_type == 'CE':
+                if self.sub_user_journey == 'continuation-questionnaire':
+                    self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=False)
+                else:
+                    self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=True)
+            else:
+                self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=False)
+
+    async def check_post_select_address_no_case(self, url, display_region, address_type, scotland=False):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            if scotland:
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_scotland
             elif display_region == 'ni':
                 if address_type == 'CE':
                     mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland_ce
@@ -801,6 +860,8 @@ class TestHelpers(RHTestCase):
             self.assertLogEvent(cm, self.build_url_log_entry('select-address', display_region, 'POST'))
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'GET'))
 
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
+
             self.assertEqual(response.status, 200)
             contents = str(await response.content.read())
             self.assertIn(self.get_logo(display_region), contents)
@@ -810,6 +871,53 @@ class TestHelpers(RHTestCase):
                 self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=True)
             else:
                 self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=False)
+
+    async def check_post_select_address_no_case_aims_addresstype_na(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
+                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
+            passthrough=[str(self.server._root)]
+        ) as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
+
+            mocked_get_ai_postcode.return_value = self.ai_postcode_results
+            if display_region == 'ni':
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_ni
+            else:
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+
+            response = await self.client.request('POST', url, data=self.common_select_address_input_valid)
+
+            self.assertLogEvent(cm, self.build_url_log_entry('select-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'GET'))
+
+            self.assertLogEvent(cm, 'no case matching uprn in RHSvc - using AIMS data')
+            self.assertLogEvent(cm, 'AIMS addressType is NA - setting to HH')
+
+            self.assertEqual(response.status, 200)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            if not display_region == 'ni':
+                self.assertIn(self.build_translation_link('confirm-address', display_region), contents)
+            self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=False)
+
+    async def check_post_select_address_error_from_get_cases(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm, \
+                aioresponses(passthrough=[str(self.server._root)]) as mocked_get_case_by_uprn:
+
+            mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
+
+            response = await self.client.request('POST', url, data=self.common_select_address_input_valid)
+            self.assertLogEvent(cm, self.build_url_log_entry('select-address', display_region, 'POST'))
+            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'GET'))
+            self.assertLogEvent(cm, 'error response from RHSvc')
+            self.assertLogEvent(cm, 'bad request', status_code=400)
+
+            self.assertEqual(response.status, 500)
+            contents = str(await response.content.read())
+            self.assertIn(self.get_logo(display_region), contents)
+            self.check_text_error_500(display_region, contents)
 
     async def check_post_select_address_address_not_found(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
@@ -836,9 +944,9 @@ class TestHelpers(RHTestCase):
     async def check_post_confirm_address_input_invalid_or_no_selection(self, url, display_region, data, is_ce=False):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
+            mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_hh_e
 
             response = await self.client.request('POST', url, data=data)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -854,10 +962,8 @@ class TestHelpers(RHTestCase):
 
     async def check_post_confirm_address_input_no(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
-                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
+                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode:
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_hh
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_no)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -869,11 +975,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('enter-address', display_region), contents)
             self.check_text_enter_address(display_region, contents, check_empty=False, check_error=False)
 
-    async def check_post_confirm_address_input_yes_code(self, url, display_region, case_by_uprn_return):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
-
-            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+    async def check_post_confirm_address_input_yes_code(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -889,12 +992,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_code_household_page_title_en, contents)
                 self.assertIn(self.content_request_code_household_title_en, contents)
 
-    async def check_post_confirm_address_input_yes_code_individual(self, url, display_region,
-                                                                   case_by_uprn_return, user_type, address_type):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
-
-            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+    async def check_post_confirm_address_input_yes_code_individual(self, url, display_region, user_type, address_type):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -908,19 +1007,12 @@ class TestHelpers(RHTestCase):
     async def check_post_confirm_address_input_yes_code_new_case(self, url, display_region,
                                                                  create_case_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+                'app.utils.RHService.post_case_create') as mocked_post_case_create:
 
-            if display_region == 'ni':
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
-            else:
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
             contents = str(await response.content.read())
@@ -937,19 +1029,12 @@ class TestHelpers(RHTestCase):
     async def check_post_confirm_address_input_yes_code_new_case_individual(
             self, url, display_region, create_case_return, user_type, address_type):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+                'app.utils.RHService.post_case_create') as mocked_post_case_create:
 
-            if display_region == 'ni':
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
-            else:
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('select-how-to-receive', display_region, 'GET'))
 
@@ -959,11 +1044,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region), contents)
             self.check_text_select_how_to_receive(display_region, contents, user_type, address_type)
 
-    async def check_post_confirm_address_input_yes_form(self, url, display_region, case_by_uprn_return):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
-
-            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+    async def check_post_confirm_address_input_yes_form(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -979,11 +1061,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_questionnaire_household_page_title_en, contents)
                 self.assertIn(self.content_request_questionnaire_household_title_en, contents)
 
-    async def check_post_confirm_address_input_yes_form_individual(self, url, display_region, case_by_uprn_return):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
-
-            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+    async def check_post_confirm_address_input_yes_form_individual(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -1001,19 +1080,12 @@ class TestHelpers(RHTestCase):
 
     async def check_post_confirm_address_input_yes_form_new_case(self, url, display_region, create_case_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+                'app.utils.RHService.post_case_create') as mocked_post_case_create:
 
-            if display_region == 'ni':
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
-            else:
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('household', display_region, 'GET'))
             contents = str(await response.content.read())
@@ -1030,19 +1102,12 @@ class TestHelpers(RHTestCase):
     async def check_post_confirm_address_input_yes_form_new_case_individual(
             self, url, display_region, create_case_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+                'app.utils.RHService.post_case_create') as mocked_post_case_create:
 
-            if display_region == 'ni':
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
-            else:
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('enter-name', display_region, 'GET'))
             contents = str(await response.content.read())
@@ -1056,11 +1121,8 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_common_enter_name_page_title_en, contents)
                 self.assertIn(self.content_request_common_enter_name_title_en, contents)
 
-    async def check_post_confirm_address_input_yes_continuation(self, url, display_region, case_by_uprn_return):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
-
-            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+    async def check_post_confirm_address_input_yes_continuation(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -1079,19 +1141,12 @@ class TestHelpers(RHTestCase):
 
     async def check_post_confirm_address_input_yes_continuation_new_case(self, url, display_region, create_case_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+                'app.utils.RHService.post_case_create') as mocked_post_case_create:
 
-            if display_region == 'ni':
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
-            else:
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('number-of-people-in-your-household',
                                                              display_region, 'GET'))
@@ -1106,11 +1161,8 @@ class TestHelpers(RHTestCase):
             else:
                 self.assertIn(self.content_request_questionnaire_people_in_household_title_en, contents)
 
-    async def check_post_confirm_address_input_yes_ce(self, url, display_region, case_by_uprn_return):
-        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
-
-            mocked_get_case_by_uprn.return_value = case_by_uprn_return
+    async def check_post_confirm_address_input_yes_ce(self, url, display_region):
+        with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
@@ -1125,19 +1177,12 @@ class TestHelpers(RHTestCase):
 
     async def check_post_confirm_address_input_yes_ce_new_case(self, url, display_region, create_case_return):
         with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
-                'app.utils.RHService.post_case_create') as mocked_post_case_create, aioresponses(
-            passthrough=[str(self.server._root)]
-        ) as mocked_get_case_by_uprn:
+                'app.utils.RHService.post_case_create') as mocked_post_case_create:
 
-            if display_region == 'ni':
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
-            else:
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_post_case_create.return_value = create_case_return
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, self.build_url_log_entry('resident-or-manager', display_region, 'GET'))
 
@@ -1209,31 +1254,6 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_common_address_in_scotland_page_title_en, contents)
                 self.assertIn(self.content_common_address_in_scotland_en, contents)
 
-    async def check_post_confirm_address_returns_addresstype_na(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm:
-            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, self.build_url_log_entry('call-contact-centre/unable-to-match-address',
-                                                             display_region, 'GET', False))
-
-            contents = str(await response.content.read())
-            self.assertIn(self.get_logo(display_region), contents)
-            if not display_region == 'ni':
-                self.assertIn(self.build_translation_link('call-contact-centre/unable-to-match-address',
-                                                          display_region, False), contents)
-            if display_region == 'ni':
-                self.assertIn(self.content_common_call_contact_centre_title_en, contents)
-                self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
-                self.assertIn(self.content_call_centre_number_ni, contents)
-            elif display_region == 'cy':
-                self.assertIn(self.content_common_call_contact_centre_title_cy, contents)
-                self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_cy, contents)
-                self.assertIn(self.content_call_centre_number_cy, contents)
-            else:
-                self.assertIn(self.content_common_call_contact_centre_title_en, contents)
-                self.assertIn(self.content_common_call_contact_centre_unable_to_match_address_en, contents)
-                self.assertIn(self.content_call_centre_number_ew, contents)
-
     async def check_post_confirm_address_continuation_ce(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
@@ -1253,38 +1273,15 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.content_request_continuation_questionnaire_not_a_household_title_en, contents)
                 self.assertIn(self.content_request_continuation_questionnaire_not_a_household_secondary_en, contents)
 
-    async def check_post_confirm_address_error_from_get_cases(self, url, display_region):
-        with self.assertLogs('respondent-home', 'INFO') as cm, \
-                aioresponses(passthrough=[str(self.server._root)]) as mocked_get_case_by_uprn:
-
-            if display_region == 'ni':
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=400)
-            else:
-                mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=400)
-
-            response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
-            self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'bad request', status_code=400)
-
-            self.assertEqual(response.status, 500)
-            contents = str(await response.content.read())
-            self.assertIn(self.get_logo(display_region), contents)
-            self.check_text_error_500(display_region, contents)
-
     async def check_post_confirm_address_error_from_create_case(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm, aioresponses(
             passthrough=[str(self.server._root)]
         ) as mocked_rhsvc:
 
-            if display_region == 'ni':
-                mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn_ni, status=404)
-            else:
-                mocked_rhsvc.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
             mocked_rhsvc.post(self.rhsvc_post_create_case_url, status=400)
 
             response = await self.client.request('POST', url, data=self.common_confirm_address_input_yes)
             self.assertLogEvent(cm, self.build_url_log_entry('confirm-address', display_region, 'POST'))
-            self.assertLogEvent(cm, 'get cases by uprn error - unable to match uprn (404)')
             self.assertLogEvent(cm, 'requesting new case')
             self.assertLogEvent(cm, 'bad request', status_code=400)
 
@@ -2018,69 +2015,58 @@ class TestHelpers(RHTestCase):
                             if check_room_number:
                                 if long_surname:
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en,
-                                        contents)
+                                        self.content_request_pq_sent_post_title_lp_ce_room_long_last_ni, contents)
                                 else:
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_title_large_print_ce_room_en,
-                                        contents)
+                                        self.content_request_pq_sent_title_lp_ce_room_ni, contents)
                             else:
                                 if individual == 'true':
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_en,
-                                        contents)
+                                        self.content_request_pq_sent_post_individual_title_lp_ce_ni, contents)
                                 else:
-                                    self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_ce_en,
-                                                  contents)
+                                    self.assertIn(self.content_request_pq_sent_post_title_lp_ce_ni, contents)
                         else:
                             if individual == 'true':
                                 self.assertIn(
-                                    self.content_request_questionnaire_sent_post_individual_title_large_print_ni,
-                                    contents)
+                                    self.content_request_pq_rhsvc_hh_sent_post_individual_title_lp_ni, contents)
                             else:
-                                self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_ni,
-                                              contents)
+                                self.assertIn(
+                                    self.content_request_pq_rhsvc_hh_sent_post_title_lp_ni, contents)
                     else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en,
-                                            contents)
+                                            self.content_request_pq_sent_indi_title_ce_room_long_last_ni, contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_title_ce_room_long_last_en,
-                                            contents)
+                                            self.content_request_pq_sent_title_ce_room_long_last_ni, contents)
                                 else:
                                     if individual == 'true':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_indi_title_ce_room_en,
-                                            contents)
+                                            self.content_request_pq_sent_individual_title_ce_room_ni, contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_post_title_ce_with_room_en,
-                                            contents)
+                                            self.content_request_pq_sent_post_title_ce_with_room_ni, contents)
                             else:
                                 if individual == 'true':
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_individual_title_ce_en, contents)
+                                        self.content_request_pq_sent_post_individual_title_ce_ni, contents)
                                 else:
-                                    self.assertIn(self.content_request_questionnaire_sent_post_title_ce_en, contents)
+                                    self.assertIn(self.content_request_pq_sent_post_title_ce_ni, contents)
                         else:
                             if individual == 'true':
                                 self.assertIn(
                                     self.content_request_questionnaire_sent_post_individual_page_title_en, contents)
                                 self.assertIn(
-                                    self.content_request_questionnaire_sent_post_individual_title_ni, contents)
+                                    self.content_request_pq_rhsvc_hh_sent_post_individual_title_ni, contents)
                             elif self.sub_user_journey == 'continuation-questionnaire':
-                                self.assertIn(
-                                    self.content_request_continuation_questionnaire_sent_post_page_title_en, contents)
-                                self.assertIn(
-                                    self.content_request_continuation_questionnaire_sent_post_title_ni, contents)
+                                self.assertIn(self.content_request_cq_sent_post_page_title_en, contents)
+                                self.assertIn(self.content_request_cq_rhsvc_sent_post_title_hh_ni, contents)
                             else:
                                 self.assertIn(self.content_request_questionnaire_sent_post_page_title_en, contents)
-                                self.assertIn(self.content_request_questionnaire_sent_post_title_ni, contents)
+                                self.assertIn(self.content_request_pq_rhsvc_hh_sent_post_title_ni, contents)
                     self.assertIn(self.content_request_questionnaire_sent_post_secondary_en, contents)
                 elif display_region == 'cy':
                     if fulfilment_type == 'LARGE_PRINT':
@@ -2114,14 +2100,20 @@ class TestHelpers(RHTestCase):
                                 else:
                                     self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_ce_cy,
                                                   contents)
+                        elif case_type == 'SPG':
+                            if individual == 'true':
+                                self.assertIn(
+                                    self.content_request_pq_rhsvc_spg_sent_post_individual_title_lp_cy, contents)
+                            else:
+                                self.assertIn(
+                                    self.content_request_pq_rhsvc_spg_sent_post_title_lp_cy, contents)
                         else:
                             if individual == 'true':
                                 self.assertIn(
-                                    self.content_request_questionnaire_sent_post_individual_title_large_print_cy,
-                                    contents)
+                                    self.content_request_pq_rhsvc_hh_sent_post_individual_title_lp_cy, contents)
                             else:
-                                self.assertIn(self.content_request_questionnaire_sent_post_title_large_print_cy,
-                                              contents)
+                                self.assertIn(
+                                    self.content_request_pq_rhsvc_hh_sent_post_title_lp_cy, contents)
                     else:
                         if case_type == 'CE':
                             if check_room_number:
@@ -2148,20 +2140,36 @@ class TestHelpers(RHTestCase):
                                         self.content_request_questionnaire_sent_post_individual_title_ce_cy, contents)
                                 else:
                                     self.assertIn(self.content_request_questionnaire_sent_post_title_ce_cy, contents)
+                        elif case_type == 'SPG':
+                            if individual == 'true':
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_page_title_cy, contents)
+                                self.assertIn(
+                                    self.content_request_pq_rhsvc_spg_sent_post_individual_title_cy, contents)
+                            elif self.sub_user_journey == 'continuation-questionnaire':
+                                self.assertIn(
+                                    self.content_request_cq_sent_post_page_title_cy, contents)
+                                self.assertIn(
+                                    self.content_request_cq_rhsvc_sent_post_title_spg_cy,
+                                    contents)
+                            else:
+                                self.assertIn(self.content_request_questionnaire_sent_post_page_title_cy, contents)
+                                self.assertIn(self.content_request_pq_rhsvc_spg_sent_post_title_cy, contents)
                         else:
                             if individual == 'true':
                                 self.assertIn(
                                     self.content_request_questionnaire_sent_post_individual_page_title_cy, contents)
                                 self.assertIn(
-                                    self.content_request_questionnaire_sent_post_individual_title_cy, contents)
+                                    self.content_request_pq_rhsvc_hh_sent_post_individual_title_cy, contents)
                             elif self.sub_user_journey == 'continuation-questionnaire':
                                 self.assertIn(
-                                    self.content_request_continuation_questionnaire_sent_post_page_title_cy, contents)
+                                    self.content_request_cq_sent_post_page_title_cy, contents)
                                 self.assertIn(
-                                    self.content_request_continuation_questionnaire_sent_post_title_cy, contents)
+                                    self.content_request_cq_rhsvc_sent_post_title_hh_cy,
+                                    contents)
                             else:
                                 self.assertIn(self.content_request_questionnaire_sent_post_page_title_cy, contents)
-                                self.assertIn(self.content_request_questionnaire_sent_post_title_cy, contents)
+                                self.assertIn(self.content_request_pq_rhsvc_hh_sent_post_title_cy, contents)
                     self.assertIn(self.content_request_questionnaire_sent_post_secondary_cy, contents)
                 else:
                     if fulfilment_type == 'LARGE_PRINT':
@@ -2175,75 +2183,197 @@ class TestHelpers(RHTestCase):
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
-                                    self.assertIn(
-                                        self.content_request_questionnaire_sent_post_title_lp_ce_with_room_long_last_en,
-                                        contents)
-                                else:
-                                    if individual == 'true':
+                                    if region == 'W':
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_indi_title_lp_ce_room_en,
+                                            self.content_request_pq_region_w_sent_post_title_lp_ce_room_long_last_en,
                                             contents)
                                     else:
                                         self.assertIn(
-                                            self.content_request_questionnaire_sent_title_large_print_ce_room_en,
+                                            self.content_request_pq_region_e_sent_post_title_lp_ce_room_long_last_en,
                                             contents)
+                                else:
+                                    if individual == 'true':
+                                        if region == 'W':
+                                            self.assertIn(
+                                                self.content_request_pq_region_w_sent_indi_title_lp_ce_room_en,
+                                                contents)
+                                        else:
+                                            self.assertIn(
+                                                self.content_request_pq_region_e_sent_indi_title_lp_ce_room_en,
+                                                contents)
+                                    else:
+                                        if region == 'W':
+                                            self.assertIn(
+                                                self.content_request_pq_rhsvc_region_w_sent_title_lp_ce_room_en,
+                                                contents)
+                                        else:
+                                            self.assertIn(
+                                                self.content_request_pq_rhsvc_region_e_sent_title_lp_ce_room_en,
+                                                contents)
                             else:
                                 if individual == 'true':
+                                    if region == 'W':
+                                        self.assertIn(
+                                            self.content_request_pq_rhsvc_region_w_sent_post_individual_title_lp_ce_en,
+                                            contents)
+                                    else:
+                                        self.assertIn(
+                                            self.content_request_pq_rhsvc_region_e_sent_post_individual_title_lp_ce_en,
+                                            contents)
+                                else:
+                                    if region == 'W':
+                                        self.assertIn(
+                                            self.content_request_pq_rhsvc_region_w_sent_post_title_lp_ce_en, contents)
+                                    else:
+                                        self.assertIn(
+                                            self.content_request_pq_rhsvc_region_e_sent_post_title_lp_ce_en, contents)
+                        elif case_type == 'SPG':
+                            if individual == 'true':
+                                if region == 'W':
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_individual_title_large_print_ce_en,
+                                        self.content_request_pq_rhsvc_region_w_spg_sent_post_individual_title_lp_en,
                                         contents)
                                 else:
                                     self.assertIn(
-                                        self.content_request_questionnaire_sent_post_title_large_print_ce_en, contents)
+                                        self.content_request_pq_rhsvc_region_e_spg_sent_post_individual_title_lp_en,
+                                        contents)
+                            else:
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_w_spg_sent_post_title_lp_en, contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_e_spg_sent_post_title_lp_en, contents)
                         else:
                             if individual == 'true':
-                                self.assertIn(
-                                    self.content_request_questionnaire_sent_post_individual_title_large_print_en,
-                                    contents)
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_w_hh_sent_post_individual_title_lp_en,
+                                        contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_e_hh_sent_post_individual_title_lp_en,
+                                        contents)
                             else:
-                                self.assertIn(
-                                    self.content_request_questionnaire_sent_post_title_large_print_en, contents)
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_w_hh_sent_post_title_lp_en, contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_e_hh_sent_post_title_lp_en, contents)
                     else:
                         if case_type == 'CE':
                             if check_room_number:
                                 if long_surname:
                                     if individual == 'true':
-                                        self.assertIn(
-                                            self.content_request_questionnaire_sent_indi_title_ce_room_long_last_en,
-                                            contents)
+                                        if region == 'W':
+                                            self.assertIn(
+                                                self.content_request_pq_region_w_sent_indi_title_ce_room_long_last_en,
+                                                contents)
+                                        else:
+                                            self.assertIn(
+                                                self.content_request_pq_region_e_sent_indi_title_ce_room_long_last_en,
+                                                contents)
                                     else:
-                                        self.assertIn(
-                                            self.content_request_questionnaire_sent_title_ce_room_long_last_en,
-                                            contents)
+                                        if region == 'W':
+                                            self.assertIn(
+                                                self.content_request_pq_region_w_sent_title_ce_room_long_last_en,
+                                                contents)
+                                        else:
+                                            self.assertIn(
+                                                self.content_request_pq_region_e_sent_title_ce_room_long_last_en,
+                                                contents)
                                 else:
                                     if individual == 'true':
-                                        self.assertIn(
-                                            self.content_request_questionnaire_sent_indi_title_ce_room_en,
-                                            contents)
+                                        if region == 'W':
+                                            self.assertIn(
+                                                self.content_request_pq_region_w_sent_indi_title_ce_room_en, contents)
+                                        else:
+                                            self.assertIn(
+                                                self.content_request_pq_region_e_sent_indi_title_ce_room_en, contents)
                                     else:
-                                        self.assertIn(
-                                            self.content_request_questionnaire_sent_post_title_ce_with_room_en,
-                                            contents)
+                                        if region == 'W':
+                                            self.assertIn(
+                                                self.content_request_pq_region_w_sent_post_title_ce_with_room_en,
+                                                contents)
+                                        else:
+                                            self.assertIn(
+                                                self.content_request_pq_region_e_sent_post_title_ce_with_room_en,
+                                                contents)
                             else:
                                 if individual == 'true':
-                                    self.assertIn(
-                                        self.content_request_questionnaire_sent_post_individual_title_ce_en, contents)
+                                    if region == 'W':
+                                        self.assertIn(
+                                            self.content_request_pq_region_w_sent_post_individual_title_ce_en, contents)
+                                    else:
+                                        self.assertIn(
+                                            self.content_request_pq_region_e_sent_post_individual_title_ce_en, contents)
                                 else:
-                                    self.assertIn(self.content_request_questionnaire_sent_post_title_ce_en, contents)
+                                    if region == 'W':
+                                        self.assertIn(self.content_request_pq_region_w_sent_post_title_ce_en, contents)
+                                    else:
+                                        self.assertIn(self.content_request_pq_region_e_sent_post_title_ce_en, contents)
+                        elif case_type == 'SPG':
+                            if individual == 'true':
+                                self.assertIn(
+                                    self.content_request_questionnaire_sent_post_individual_page_title_en, contents)
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_w_spg_sent_post_individual_title_en,
+                                        contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_e_spg_sent_post_individual_title_en,
+                                        contents)
+                            elif self.sub_user_journey == 'continuation-questionnaire':
+                                self.assertIn(
+                                    self.content_request_cq_sent_post_page_title_en, contents)
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_cq_rhsvc_sent_post_title_spg_region_w_en,
+                                        contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_cq_rhsvc_sent_post_title_spg_region_e_en,
+                                        contents)
+                            else:
+                                self.assertIn(self.content_request_questionnaire_sent_post_page_title_en, contents)
+                                if region == 'W':
+                                    self.assertIn(self.content_request_pq_rhsvc_region_w_spg_sent_post_title_en,
+                                                  contents)
+                                else:
+                                    self.assertIn(self.content_request_pq_rhsvc_region_e_spg_sent_post_title_en,
+                                                  contents)
+
                         else:
                             if individual == 'true':
                                 self.assertIn(
                                     self.content_request_questionnaire_sent_post_individual_page_title_en, contents)
-                                self.assertIn(
-                                    self.content_request_questionnaire_sent_post_individual_title_en, contents)
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_w_hh_sent_post_individual_title_en,
+                                        contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_pq_rhsvc_region_e_hh_sent_post_individual_title_en,
+                                        contents)
                             elif self.sub_user_journey == 'continuation-questionnaire':
                                 self.assertIn(
-                                    self.content_request_continuation_questionnaire_sent_post_page_title_en, contents)
-                                self.assertIn(
-                                    self.content_request_continuation_questionnaire_sent_post_title_en, contents)
+                                    self.content_request_cq_sent_post_page_title_en, contents)
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_cq_rhsvc_sent_post_title_hh_region_w_en, contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_cq_rhsvc_sent_post_title_hh_region_e_en, contents)
                             else:
                                 self.assertIn(self.content_request_questionnaire_sent_post_page_title_en, contents)
-                                self.assertIn(self.content_request_questionnaire_sent_post_title_en, contents)
+                                if region == 'W':
+                                    self.assertIn(self.content_request_pq_rhsvc_region_w_hh_sent_post_title_en,
+                                                  contents)
+                                else:
+                                    self.assertIn(self.content_request_pq_rhsvc_region_e_hh_sent_post_title_en,
+                                                  contents)
                     self.assertIn(self.content_request_questionnaire_sent_post_secondary_en, contents)
             else:
                 if not display_region == 'ni':
@@ -2256,14 +2386,14 @@ class TestHelpers(RHTestCase):
                     if case_type == 'CE':
                         if check_room_number:
                             if long_surname:
-                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_long_surname_en,
+                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_long_surname_ni,
                                               contents)
                             else:
-                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_en, contents)
+                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_ni, contents)
                         else:
-                            self.assertIn(self.content_request_code_sent_post_title_ce_en, contents)
+                            self.assertIn(self.content_request_code_sent_post_title_ce_ni, contents)
                     else:
-                        self.assertIn(self.content_request_code_sent_post_title_ni, contents)
+                        self.assertIn(self.content_request_code_rhsvc_sent_post_title_ni, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_by_post_page_title_individual_en, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
@@ -2283,8 +2413,10 @@ class TestHelpers(RHTestCase):
                                 self.assertIn(self.content_request_code_sent_post_title_ce_with_room_cy, contents)
                         else:
                             self.assertIn(self.content_request_code_sent_post_title_ce_cy, contents)
+                    elif case_type == 'SPG':
+                        self.assertIn(self.content_request_code_spg_sent_post_title_cy, contents)
                     else:
-                        self.assertIn(self.content_request_code_sent_post_title_cy, contents)
+                        self.assertIn(self.content_request_code_hh_sent_post_title_cy, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_by_post_page_title_individual_cy, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_cy, contents)
@@ -2298,14 +2430,36 @@ class TestHelpers(RHTestCase):
                     if case_type == 'CE':
                         if check_room_number:
                             if long_surname:
-                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_long_surname_en,
-                                              contents)
+                                if region == 'W':
+                                    self.assertIn(
+                                        self.content_request_code_region_w_sent_post_title_ce_with_room_long_surname_en,
+                                        contents)
+                                else:
+                                    self.assertIn(
+                                        self.content_request_code_region_e_sent_post_title_ce_with_room_long_surname_en,
+                                        contents)
                             else:
-                                self.assertIn(self.content_request_code_sent_post_title_ce_with_room_en, contents)
+                                if region == 'W':
+                                    self.assertIn(self.content_request_code_region_w_sent_post_title_ce_with_room_en,
+                                                  contents)
+                                else:
+                                    self.assertIn(self.content_request_code_region_e_sent_post_title_ce_with_room_en,
+                                                  contents)
                         else:
-                            self.assertIn(self.content_request_code_sent_post_title_ce_en, contents)
+                            if region == 'W':
+                                self.assertIn(self.content_request_code_region_w_sent_post_title_ce_en, contents)
+                            else:
+                                self.assertIn(self.content_request_code_region_e_sent_post_title_ce_en, contents)
+                    elif case_type == 'SPG':
+                        if region == 'W':
+                            self.assertIn(self.content_request_code_spg_region_w_sent_post_title_en, contents)
+                        else:
+                            self.assertIn(self.content_request_code_spg_region_e_sent_post_title_en, contents)
                     else:
-                        self.assertIn(self.content_request_code_sent_post_title_en, contents)
+                        if region == 'W':
+                            self.assertIn(self.content_request_code_hh_region_w_sent_post_title_en, contents)
+                        else:
+                            self.assertIn(self.content_request_code_hh_region_e_sent_post_title_en, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_by_post_page_title_individual_en, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
@@ -2316,7 +2470,7 @@ class TestHelpers(RHTestCase):
                         self.assertIn(self.content_request_code_sent_by_post_page_title_household_en, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_household_en, contents)
 
-    async def check_post_confirm_send_by_post_input_no(self, url, display_region, user_type, address_type):
+    async def check_post_confirm_send_by_post_input_no(self, url, display_region):
         with self.assertLogs('respondent-home', 'INFO') as cm:
 
             response = await self.client.request('POST', url, data=self.request_common_confirm_send_by_post_data_no)
@@ -2510,16 +2664,26 @@ class TestHelpers(RHTestCase):
                 self.assertIn(self.build_translation_link('select-how-to-receive', display_region, True), contents)
             self.check_text_select_how_to_receive(display_region, contents, 'individual', address_type)
 
-    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page,
+    async def add_room_number(self, url_get, url_post, display_region, user_type, return_page, region, ce_type,
                               data_over_length=False, check_for_value=False, data_only_space=False):
-        with self.assertLogs('respondent-home', 'INFO') as cm, \
-                mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
-                'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn:
-            mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            if display_region == 'ni':
-                mocked_get_ai_uprn.return_value = self.ai_uprn_result_northern_ireland_ce
+        with self.assertLogs('respondent-home', 'INFO') as cm, mock.patch(
+                'app.utils.RHService.get_case_by_uprn') as mocked_get_case_by_uprn:
+
+            if region == 'N':
+                if ce_type == 'manager':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_n
+                elif ce_type == 'resident':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_n
+            elif region == 'W':
+                if ce_type == 'manager':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_w
+                elif ce_type == 'resident':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_w
             else:
-                mocked_get_ai_uprn.return_value = self.ai_uprn_result_ce
+                if ce_type == 'manager':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_m_e
+                elif ce_type == 'resident':
+                    mocked_get_case_by_uprn.return_value = self.rhsvc_case_by_uprn_ce_r_e
 
             response = await self.client.request('GET', url_get)
             self.assertLogEvent(cm, self.build_url_log_entry('enter-flat-or-room-number', display_region, 'GET'))

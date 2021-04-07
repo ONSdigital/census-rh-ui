@@ -5,10 +5,10 @@
    "addressType": "CE",
    "addressLevel": "E",
    "uprn": "123456",
-   "addressLine1": "1 main street",
-   "addressLine2": "upper upperingham",
+   "addressLine1": "Halls Of Residence",
+   "addressLine2": "Weston University",
    "addressLine3": "",
-   "townName": "upton",
-   "postcode": "UP103UP",
+   "townName": "Weston",
+   "postcode": "WE10 7WE",
    "region": "W"
 }
