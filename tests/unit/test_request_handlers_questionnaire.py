@@ -218,25 +218,72 @@ class TestRequestHandlersPaperForm(TestHelpers):
             self.post_request_paper_questionnaire_select_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_paper_questionnaire_census_address_type_na_ew(self):
+    async def test_get_request_paper_questionnaire_census_address_type_na_ew_e(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
         await self.check_post_select_address_no_case_aims_addresstype_na(
-            self.post_request_paper_questionnaire_select_address_en, 'en')
+            self.post_request_paper_questionnaire_select_address_en, 'en', 'E')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_na_e)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'QUESTIONNAIRE', 'E', 'false',
+            number_in_household=4, check_address_was_na=True)
+
+    @unittest_run_loop
+    async def test_get_request_paper_questionnaire_census_address_type_na_ew_w(self):
+        await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_en, 'en')
+        await self.check_post_select_address_no_case_aims_addresstype_na(
+            self.post_request_paper_questionnaire_select_address_en, 'en', 'W')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_questionnaire_confirm_address_en, 'en', self.rhsvc_case_by_uprn_na_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_en, 'en')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_en, 'en', '4')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_en, 'en', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_en, 'en', 'HH', 'QUESTIONNAIRE', 'W', 'false',
+            number_in_household=4, check_address_was_na=True)
 
     @unittest_run_loop
     async def test_get_request_paper_questionnaire_census_address_type_na_cy(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_cy, 'cy')
         await self.check_post_select_address_no_case_aims_addresstype_na(
-            self.post_request_paper_questionnaire_select_address_cy, 'cy')
+            self.post_request_paper_questionnaire_select_address_cy, 'cy', 'W')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_questionnaire_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_na_w)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_cy, 'cy')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_cy, 'cy', '4')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_cy, 'cy', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_cy, 'cy', 'HH', 'QUESTIONNAIRE', 'W', 'false',
+            number_in_household=4, check_address_was_na=True)
 
     @unittest_run_loop
     async def test_get_request_paper_questionnaire_census_address_type_na_ni(self):
         await self.check_get_enter_address(self.get_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_enter_address(self.post_request_paper_questionnaire_enter_address_ni, 'ni')
         await self.check_post_select_address_no_case_aims_addresstype_na(
-            self.post_request_paper_questionnaire_select_address_ni, 'ni')
+            self.post_request_paper_questionnaire_select_address_ni, 'ni', 'N')
+        await self.check_post_confirm_address_input_yes_form_new_case(
+            self.post_request_paper_questionnaire_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_na_n)
+        await self.check_post_household_information_form(
+            self.post_request_paper_questionnaire_household_ni, 'ni')
+        await self.check_post_people_in_household(
+            self.post_request_paper_questionnaire_people_in_household_ni, 'ni', '4')
+        await self.check_post_enter_name(self.post_request_paper_questionnaire_enter_name_ni, 'ni', 'household', 'HH')
+        await self.check_post_confirm_send_by_post_input_yes(
+            self.post_request_paper_questionnaire_confirm_send_by_post_ni, 'ni', 'HH', 'QUESTIONNAIRE', 'N', 'false',
+            number_in_household=4, check_address_was_na=True)
 
     @unittest_run_loop
     async def test_get_request_paper_questionnaire_confirm_address_new_case_hh_ew_e(self):

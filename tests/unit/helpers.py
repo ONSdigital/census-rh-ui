@@ -872,7 +872,7 @@ class TestHelpers(RHTestCase):
             else:
                 self.check_text_confirm_address(display_region, contents, check_error=False, check_ce=False)
 
-    async def check_post_select_address_no_case_aims_addresstype_na(self, url, display_region):
+    async def check_post_select_address_no_case_aims_addresstype_na(self, url, display_region, region):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.AddressIndex.get_ai_postcode') as mocked_get_ai_postcode, mock.patch(
                 'app.utils.AddressIndex.get_ai_uprn') as mocked_get_ai_uprn, aioresponses(
@@ -882,10 +882,12 @@ class TestHelpers(RHTestCase):
             mocked_get_case_by_uprn.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
 
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
-            if display_region == 'ni':
-                mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_ni
+            if region == 'N':
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_n
+            elif region == 'W':
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_w
             else:
-                mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+                mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_e
 
             response = await self.client.request('POST', url, data=self.common_select_address_input_valid)
 
@@ -1950,7 +1952,7 @@ class TestHelpers(RHTestCase):
     async def check_post_confirm_send_by_post_input_yes(self, url, display_region, case_type, fulfilment_type,
                                                         region, individual, override_sub_user_journey=None,
                                                         check_room_number=False, long_surname=False,
-                                                        number_in_household=None):
+                                                        number_in_household=None, check_address_was_na=False):
         with self.assertLogs('respondent-home', 'INFO') as cm, \
                 mock.patch('app.utils.RHService.get_fulfilment') as mocked_get_fulfilment, \
                 mock.patch('app.utils.RHService.request_fulfilment_post') as mocked_request_fulfilment_post:
@@ -2063,10 +2065,16 @@ class TestHelpers(RHTestCase):
                                     self.content_request_pq_rhsvc_hh_sent_post_individual_title_ni, contents)
                             elif self.sub_user_journey == 'continuation-questionnaire':
                                 self.assertIn(self.content_request_cq_sent_post_page_title_en, contents)
-                                self.assertIn(self.content_request_cq_rhsvc_sent_post_title_hh_ni, contents)
+                                if check_address_was_na:
+                                    self.assertIn(self.content_request_cq_aims_sent_post_title_na_ni, contents)
+                                else:
+                                    self.assertIn(self.content_request_cq_rhsvc_sent_post_title_hh_ni, contents)
                             else:
                                 self.assertIn(self.content_request_questionnaire_sent_post_page_title_en, contents)
-                                self.assertIn(self.content_request_pq_rhsvc_hh_sent_post_title_ni, contents)
+                                if check_address_was_na:
+                                    self.assertIn(self.content_request_pq_aims_na_sent_post_title_ni, contents)
+                                else:
+                                    self.assertIn(self.content_request_pq_rhsvc_hh_sent_post_title_ni, contents)
                     self.assertIn(self.content_request_questionnaire_sent_post_secondary_en, contents)
                 elif display_region == 'cy':
                     if fulfilment_type == 'LARGE_PRINT':
@@ -2164,12 +2172,16 @@ class TestHelpers(RHTestCase):
                             elif self.sub_user_journey == 'continuation-questionnaire':
                                 self.assertIn(
                                     self.content_request_cq_sent_post_page_title_cy, contents)
-                                self.assertIn(
-                                    self.content_request_cq_rhsvc_sent_post_title_hh_cy,
-                                    contents)
+                                if check_address_was_na:
+                                    self.assertIn(self.content_request_cq_aims_sent_post_title_na_cy, contents)
+                                else:
+                                    self.assertIn(self.content_request_cq_rhsvc_sent_post_title_hh_cy, contents)
                             else:
                                 self.assertIn(self.content_request_questionnaire_sent_post_page_title_cy, contents)
-                                self.assertIn(self.content_request_pq_rhsvc_hh_sent_post_title_cy, contents)
+                                if check_address_was_na:
+                                    self.assertIn(self.content_request_pq_aims_na_sent_post_title_cy, contents)
+                                else:
+                                    self.assertIn(self.content_request_pq_rhsvc_hh_sent_post_title_cy, contents)
                     self.assertIn(self.content_request_questionnaire_sent_post_secondary_cy, contents)
                 else:
                     if fulfilment_type == 'LARGE_PRINT':
@@ -2360,20 +2372,36 @@ class TestHelpers(RHTestCase):
                             elif self.sub_user_journey == 'continuation-questionnaire':
                                 self.assertIn(
                                     self.content_request_cq_sent_post_page_title_en, contents)
-                                if region == 'W':
-                                    self.assertIn(
-                                        self.content_request_cq_rhsvc_sent_post_title_hh_region_w_en, contents)
+                                if check_address_was_na:
+                                    if region == 'W':
+                                        self.assertIn(
+                                            self.content_request_cq_aims_sent_post_title_na_region_w_en, contents)
+                                    else:
+                                        self.assertIn(
+                                            self.content_request_cq_aims_sent_post_title_na_region_e_en, contents)
                                 else:
-                                    self.assertIn(
-                                        self.content_request_cq_rhsvc_sent_post_title_hh_region_e_en, contents)
+                                    if region == 'W':
+                                        self.assertIn(
+                                            self.content_request_cq_rhsvc_sent_post_title_hh_region_w_en, contents)
+                                    else:
+                                        self.assertIn(
+                                            self.content_request_cq_rhsvc_sent_post_title_hh_region_e_en, contents)
                             else:
                                 self.assertIn(self.content_request_questionnaire_sent_post_page_title_en, contents)
-                                if region == 'W':
-                                    self.assertIn(self.content_request_pq_rhsvc_region_w_hh_sent_post_title_en,
-                                                  contents)
+                                if check_address_was_na:
+                                    if region == 'W':
+                                        self.assertIn(self.content_request_pq_aims_region_w_na_sent_post_title_en,
+                                                      contents)
+                                    else:
+                                        self.assertIn(self.content_request_pq_aims_region_e_na_sent_post_title_en,
+                                                      contents)
                                 else:
-                                    self.assertIn(self.content_request_pq_rhsvc_region_e_hh_sent_post_title_en,
-                                                  contents)
+                                    if region == 'W':
+                                        self.assertIn(self.content_request_pq_rhsvc_region_w_hh_sent_post_title_en,
+                                                      contents)
+                                    else:
+                                        self.assertIn(self.content_request_pq_rhsvc_region_e_hh_sent_post_title_en,
+                                                      contents)
                     self.assertIn(self.content_request_questionnaire_sent_post_secondary_en, contents)
             else:
                 if not display_region == 'ni':
@@ -2393,7 +2421,10 @@ class TestHelpers(RHTestCase):
                         else:
                             self.assertIn(self.content_request_code_sent_post_title_ce_ni, contents)
                     else:
-                        self.assertIn(self.content_request_code_rhsvc_sent_post_title_ni, contents)
+                        if check_address_was_na:
+                            self.assertIn(self.content_request_code_aims_na_sent_post_title_ni, contents)
+                        else:
+                            self.assertIn(self.content_request_code_rhsvc_sent_post_title_ni, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_by_post_page_title_individual_en, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)
@@ -2416,7 +2447,10 @@ class TestHelpers(RHTestCase):
                     elif case_type == 'SPG':
                         self.assertIn(self.content_request_code_spg_sent_post_title_cy, contents)
                     else:
-                        self.assertIn(self.content_request_code_hh_sent_post_title_cy, contents)
+                        if check_address_was_na:
+                            self.assertIn(self.content_request_code_na_sent_post_title_cy, contents)
+                        else:
+                            self.assertIn(self.content_request_code_hh_sent_post_title_cy, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_by_post_page_title_individual_cy, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_cy, contents)
@@ -2456,10 +2490,16 @@ class TestHelpers(RHTestCase):
                         else:
                             self.assertIn(self.content_request_code_spg_region_e_sent_post_title_en, contents)
                     else:
-                        if region == 'W':
-                            self.assertIn(self.content_request_code_hh_region_w_sent_post_title_en, contents)
+                        if check_address_was_na:
+                            if region == 'W':
+                                self.assertIn(self.content_request_code_na_region_w_sent_post_title_en, contents)
+                            else:
+                                self.assertIn(self.content_request_code_na_region_e_sent_post_title_en, contents)
                         else:
-                            self.assertIn(self.content_request_code_hh_region_e_sent_post_title_en, contents)
+                            if region == 'W':
+                                self.assertIn(self.content_request_code_hh_region_w_sent_post_title_en, contents)
+                            else:
+                                self.assertIn(self.content_request_code_hh_region_e_sent_post_title_en, contents)
                     if individual == 'true':
                         self.assertIn(self.content_request_code_sent_by_post_page_title_individual_en, contents)
                         self.assertIn(self.content_request_code_sent_post_secondary_individual_en, contents)

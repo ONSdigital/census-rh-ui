@@ -1775,7 +1775,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_e)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_e
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_e
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1865,7 +1865,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_w)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_e
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_w
 
             mocked.post(self.rhsvc_url_surveylaunched)
@@ -1955,7 +1955,7 @@ class TestStartHandlersLinkAddress(TestHelpers):
             mocked.get(self.rhsvc_url, payload=self.link_address_uac_json_n)
             mocked_get_ai_postcode.return_value = self.ai_postcode_results
             mocked.get(self.rhsvc_cases_by_uprn_url + self.selected_uprn, status=404)
-            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_ni
+            mocked_get_ai_uprn.return_value = self.ai_uprn_result_censusaddresstype_na_n
             mocked_post_link_uac.return_value = self.rhsvc_post_linked_uac_n
 
             mocked.post(self.rhsvc_url_surveylaunched)

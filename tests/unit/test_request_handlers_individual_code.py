@@ -202,12 +202,36 @@ class TestRequestHandlersIndividualCode(TestHelpers):
             self.post_request_individual_code_select_address_ni, 'ni')
 
     @unittest_run_loop
-    async def test_get_request_individual_code_census_address_type_na_ew(self):
+    async def test_get_request_individual_code_census_address_type_na_ew_e(self):
         await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
         await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
         await self.check_post_select_address_no_case_aims_addresstype_na(
-            self.post_request_individual_code_select_address_en, 'en')
+            self.post_request_individual_code_select_address_en, 'en', 'E')
+        await self.check_post_confirm_address_input_yes_code_new_case_individual(
+            self.post_request_individual_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_na_e,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_sms(
+            self.post_request_individual_code_select_how_to_receive_en, 'en')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_en, 'en', 'individual')
+        await self.check_post_confirm_send_by_text(
+            self.post_request_individual_code_confirm_send_by_text_en, 'en', 'HH', 'E', 'true')
+
+    @unittest_run_loop
+    async def test_get_request_individual_code_census_address_type_na_ew_w(self):
+        await self.check_get_request_individual_code(self.get_request_individual_code_en, 'en')
+        await self.check_post_request_individual_code(self.post_request_individual_code_en, 'en')
+        await self.check_post_enter_address(self.post_request_individual_code_enter_address_en, 'en')
+        await self.check_post_select_address_no_case_aims_addresstype_na(
+            self.post_request_individual_code_select_address_en, 'en', 'W')
+        await self.check_post_confirm_address_input_yes_code_new_case_individual(
+            self.post_request_individual_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_na_w,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_sms(
+            self.post_request_individual_code_select_how_to_receive_en, 'en')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_en, 'en', 'individual')
+        await self.check_post_confirm_send_by_text(
+            self.post_request_individual_code_confirm_send_by_text_en, 'en', 'HH', 'W', 'true')
 
     @unittest_run_loop
     async def test_get_request_individual_code_census_address_type_na_cy(self):
@@ -215,7 +239,15 @@ class TestRequestHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_cy, 'cy')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_cy, 'cy')
         await self.check_post_select_address_no_case_aims_addresstype_na(
-            self.post_request_individual_code_select_address_cy, 'cy')
+            self.post_request_individual_code_select_address_cy, 'cy', 'W')
+        await self.check_post_confirm_address_input_yes_code_new_case_individual(
+            self.post_request_individual_code_confirm_address_cy, 'cy', self.rhsvc_case_by_uprn_na_w,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_sms(
+            self.post_request_individual_code_select_how_to_receive_cy, 'cy')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_cy, 'cy', 'individual')
+        await self.check_post_confirm_send_by_text(
+            self.post_request_individual_code_confirm_send_by_text_cy, 'cy', 'HH', 'W', 'true')
 
     @unittest_run_loop
     async def test_get_request_individual_code_census_address_type_na_ni(self):
@@ -223,7 +255,15 @@ class TestRequestHandlersIndividualCode(TestHelpers):
         await self.check_post_request_individual_code(self.post_request_individual_code_ni, 'ni')
         await self.check_post_enter_address(self.post_request_individual_code_enter_address_ni, 'ni')
         await self.check_post_select_address_no_case_aims_addresstype_na(
-            self.post_request_individual_code_select_address_ni, 'ni')
+            self.post_request_individual_code_select_address_ni, 'ni', 'N')
+        await self.check_post_confirm_address_input_yes_code_new_case_individual(
+            self.post_request_individual_code_confirm_address_ni, 'ni', self.rhsvc_case_by_uprn_na_n,
+            'individual', 'HH')
+        await self.check_post_select_how_to_receive_input_sms(
+            self.post_request_individual_code_select_how_to_receive_ni, 'ni')
+        await self.check_post_enter_mobile(self.post_request_individual_code_enter_mobile_ni, 'ni', 'individual')
+        await self.check_post_confirm_send_by_text(
+            self.post_request_individual_code_confirm_send_by_text_ni, 'ni', 'HH', 'N', 'true')
 
     @unittest_run_loop
     async def test_post_request_individual_code_enter_address_invalid_postcode_ew(self):

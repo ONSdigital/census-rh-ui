@@ -585,9 +585,7 @@ class CommonConfirmAddress(CommonCommon):
 
             if (attributes['censusAddressType'] == 'CE') and (sub_user_journey == 'continuation-questionnaire'):
                 logger.info('continuation form for a CE - rejecting',
-                            client_ip=request['client_ip'],
-                            client_id=request['client_id'],
-                            trace=request['trace'],
+                            **tracking,
                             sub_journey=sub_user_journey,
                             census_addr_type=attributes['censusAddressType'])
                 raise HTTPFound(
@@ -599,9 +597,7 @@ class CommonConfirmAddress(CommonCommon):
                 uprn = attributes['uprn']
                 if country_code_value == 'S':
                     logger.info('address is in Scotland',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 country_code_found=country_code_value,
                                 uprn_value=uprn)
                     raise HTTPFound(
@@ -609,9 +605,7 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
                 elif country_code_value == 'N' and display_region != 'ni':
                     logger.info('address is in Northern Ireland but not display_region ni',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
@@ -620,10 +614,8 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
                 elif display_region == 'ni' and country_code_value == 'W':
                     logger.info('address is in Wales but display_region ni',
-                                client_ip=request['client_ip'],
                                 country_code_found=country_code_value,
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
                     raise HTTPFound(
@@ -631,9 +623,7 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
                 elif display_region == 'ni' and country_code_value == 'E':
                     logger.info('address is in England but display_region ni',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
@@ -673,22 +663,16 @@ class CommonConfirmAddress(CommonCommon):
                     hashed_uac_value = session['case']['uacHash']
                     if ex.status == 404:
                         logger.info('uac linking error - unable to find uac (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'],
-                                    client_id=request['client_id'],
-                                    trace=request['trace'],
+                                    **tracking,
                                     status_code=ex.status, uac_hashed=hashed_uac_value)
                     elif ex.status == 400:
                         logger.info('uac linking error - invalid request (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'],
-                                    client_id=request['client_id'],
-                                    trace=request['trace'],
+                                    **tracking,
                                     status_code=ex.status,
                                     uac_hashed=hashed_uac_value)
                     else:
                         logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
-                                     client_ip=request['client_ip'],
-                                     client_id=request['client_id'],
-                                     trace=request['trace'],
+                                     **tracking,
                                      status_code=ex.status,
                                      uac_hashed=hashed_uac_value)
 
@@ -744,11 +728,7 @@ class CommonConfirmAddress(CommonCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.info('address confirmation error',
-                        client_ip=request['client_ip'],
-                        client_id=request['client_id'],
-                        trace=request['trace'],
-                        user_selection=address_confirmation)
+            logger.info('address confirmation error', **tracking, user_selection=address_confirmation)
             flash(request, NO_SELECTION_CHECK_MSG)
             raise HTTPFound(
                 request.app.router['CommonConfirmAddress:get'].url_for(

@@ -382,15 +382,20 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.ai_uprn_result_scotland = f
 
-        with open('tests/test_data/address_index/uprn_censusaddresstype_na.json') as fp:
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na_e.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_uprn_result_censusaddresstype_na = f
+            self.ai_uprn_result_censusaddresstype_na_e = f
 
-        with open('tests/test_data/address_index/uprn_censusaddresstype_na_ni.json') as fp:
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na_w.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
-            self.ai_uprn_result_censusaddresstype_na_ni = f
+            self.ai_uprn_result_censusaddresstype_na_w = f
+
+        with open('tests/test_data/address_index/uprn_censusaddresstype_na_n.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.ai_uprn_result_censusaddresstype_na_n = f
 
         # Content
         self.ons_logo_en = '/img/ons-logo-pos-en.svg'
@@ -1069,6 +1074,21 @@ class RHTestCase(AioHTTPTestCase):
             f.set_result(json.load(fp))
             self.rhsvc_case_by_uprn_ce_r_n = f
 
+        with open('tests/test_data/rhsvc/case_by_uprn_na_e.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_case_by_uprn_na_e = f
+
+        with open('tests/test_data/rhsvc/case_by_uprn_na_w.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_case_by_uprn_na_w = f
+
+        with open('tests/test_data/rhsvc/case_by_uprn_na_n.json') as fp:
+            f = asyncio.Future()
+            f.set_result(json.load(fp))
+            self.rhsvc_case_by_uprn_na_n = f
+
         with open('tests/test_data/rhsvc/get_fulfilment_multi_sms.json') as fp:
             f = asyncio.Future()
             f.set_result(json.load(fp))
@@ -1493,6 +1513,10 @@ class RHTestCase(AioHTTPTestCase):
             'A letter will be sent to Bob Bobbington at 1 Main Street, Upper Upperingham'
         self.content_request_code_hh_region_w_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 1 West Street, West Westingham'
+        self.content_request_code_na_region_e_sent_post_title_en = \
+            'A letter will be sent to Bob Bobbington at Holiday Accommodation, Brampton Road'
+        self.content_request_code_na_region_w_sent_post_title_en = \
+            'A letter will be sent to Bob Bobbington at Holiday Wales Accommodation, Brampton Road'
         self.content_request_code_spg_region_e_sent_post_title_en = \
             'A letter will be sent to Bob Bobbington at 2 Main Street, Upper Upperingham'
         self.content_request_code_spg_region_w_sent_post_title_en = \
@@ -1530,6 +1554,8 @@ class RHTestCase(AioHTTPTestCase):
             '<title>Caiff cod mynediad unigol ei anfon drwy&#39;r post - Cyfrifiad 2021</title>'
         self.content_request_code_hh_sent_post_title_cy = \
             'Caiff llythyr ei anfon at Bob Bobbington yn 1 West Street, West Westingham'
+        self.content_request_code_na_sent_post_title_cy = \
+            'Caiff llythyr ei anfon at Bob Bobbington yn Holiday Wales Accommodation, Brampton Road'
         self.content_request_code_spg_sent_post_title_cy = \
             'Caiff llythyr ei anfon at Bob Bobbington yn 2 West Street, West Westingham'
         self.content_request_code_aims_sent_post_title_cy = \
@@ -1553,7 +1579,7 @@ class RHTestCase(AioHTTPTestCase):
             "gyrraedd cyn pen 5 diwrnod gwaith"
         self.content_request_code_rhsvc_sent_post_title_ni = \
             'A letter will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
-        self.content_request_code_aims_sent_post_title_ni = \
+        self.content_request_code_aims_na_sent_post_title_ni = \
             'A letter will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
         self.content_request_code_sent_post_title_ce_ni = \
             'A letter will be sent to Bob Bobbington at Halls Of Residence, Lowton University'
@@ -2292,6 +2318,11 @@ class RHTestCase(AioHTTPTestCase):
             'A household paper questionnaire will be sent to Bob Bobbington at 1 Main Street, Upper Upperingham'
         self.content_request_pq_rhsvc_region_w_hh_sent_post_title_en = \
             'A household paper questionnaire will be sent to Bob Bobbington at 1 West Street, West Westingham'
+        self.content_request_pq_aims_region_e_na_sent_post_title_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington at Holiday Accommodation, Brampton Road'
+        self.content_request_pq_aims_region_w_na_sent_post_title_en = \
+            'A household paper questionnaire will be sent to Bob Bobbington at ' \
+            'Holiday Wales Accommodation, Brampton Road'
         self.content_request_pq_rhsvc_region_e_spg_sent_post_title_en = \
             'A household paper questionnaire will be sent to Bob Bobbington at 2 Main Street, Upper Upperingham'
         self.content_request_pq_rhsvc_region_w_spg_sent_post_title_en = \
@@ -2407,6 +2438,8 @@ class RHTestCase(AioHTTPTestCase):
             "<title>Caiff copi print mawr o&#39;r holiadur papur i unigolion ei anfon - Cyfrifiad 2021</title>"
         self.content_request_pq_rhsvc_hh_sent_post_title_cy = \
             "Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn 1 West Street, West Westingham"
+        self.content_request_pq_aims_na_sent_post_title_cy = \
+            "Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn Holiday Wales Accommodation, Brampton Road"
         self.content_request_pq_rhsvc_spg_sent_post_title_cy = \
             "Caiff holiadur papur y cartref ei anfon at Bob Bobbington yn 2 West Street, West Westingham"
         self.content_request_pq_rhsvc_hh_sent_post_individual_title_cy = \
@@ -2465,6 +2498,8 @@ class RHTestCase(AioHTTPTestCase):
 
         self.content_request_pq_rhsvc_hh_sent_post_title_ni = \
             'A household paper questionnaire will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
+        self.content_request_pq_aims_na_sent_post_title_ni = \
+            'A household paper questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
         self.content_request_pq_rhsvc_hh_sent_post_individual_title_ni = \
             'An individual paper questionnaire will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
         self.content_request_pq_rhsvc_hh_sent_post_title_lp_ni = \
@@ -2673,6 +2708,10 @@ class RHTestCase(AioHTTPTestCase):
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Main Street, Upper Upperingham'
         self.content_request_cq_rhsvc_sent_post_title_hh_region_w_en = \
             'A continuation questionnaire will be sent to Bob Bobbington at 1 West Street, West Westingham'
+        self.content_request_cq_aims_sent_post_title_na_region_e_en = \
+            'A continuation questionnaire will be sent to Bob Bobbington at Holiday Accommodation, Brampton Road'
+        self.content_request_cq_aims_sent_post_title_na_region_w_en = \
+            'A continuation questionnaire will be sent to Bob Bobbington at Holiday Wales Accommodation, Brampton Road'
         self.content_request_cq_rhsvc_sent_post_title_spg_region_e_en = \
             'A continuation questionnaire will be sent to Bob Bobbington at 2 Main Street, Upper Upperingham'
         self.content_request_cq_rhsvc_sent_post_title_spg_region_w_en = \
@@ -2687,14 +2726,15 @@ class RHTestCase(AioHTTPTestCase):
             "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 1 West Street, West Westingham"
         self.content_request_cq_rhsvc_sent_post_title_spg_cy = \
             "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 2 West Street, West Westingham"
-        self.content_request_continuation_questionnaire_aims_sent_post_title_cy = \
-            "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn 1 Gate Reach, Exeter"
+        self.content_request_cq_aims_sent_post_title_na_cy = \
+            "Caiff holiadur papur y cartref (parhad) ei anfon at Bob Bobbington yn " \
+            "Holiday Wales Accommodation, Brampton Road"
         self.content_request_continuation_questionnaire_sent_post_secondary_cy = \
             "Dylai hyn gyrraedd cyn pen 5 diwrnod gwaith i chi gwblhau eich cyfrifiad"
 
         self.content_request_cq_rhsvc_sent_post_title_hh_ni = \
             'A continuation questionnaire will be sent to Bob Bobbington at 1 Side Street, Lower Loweringham'
-        self.content_request_continuation_questionnaire_aims_sent_post_title_ni = \
+        self.content_request_cq_aims_sent_post_title_na_ni = \
             'A continuation questionnaire will be sent to Bob Bobbington at 27 Kings Road, Whitehead'
 
         self.content_request_continuation_questionnaire_confirm_send_by_post_page_title_en = \
