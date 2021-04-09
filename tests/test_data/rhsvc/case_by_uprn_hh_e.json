@@ -10,5 +10,6 @@
    "addressLine3": "",
    "townName": "Upton",
    "postcode": "UP10 3UP",
-   "region": "E"
+   "region": "E",
+   "estabType": "HOUSEHOLD"
 }

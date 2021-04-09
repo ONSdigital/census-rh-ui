@@ -10,5 +10,6 @@
    "addressLine3": "",
    "townName": "Whitehead",
    "postcode": "BT38 9PT",
-   "region": "N"
+   "region": "N",
+   "estabType": "HOUSEHOLD"
 }

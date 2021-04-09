@@ -10,5 +10,6 @@
    "addressLine3": "",
    "townName": "Weston",
    "postcode": "WE10 3WE",
-   "region": "W"
+   "region": "W",
+   "estabType": "HOUSEHOLD"
 }

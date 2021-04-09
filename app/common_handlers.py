@@ -490,6 +490,7 @@ class CommonConfirmAddress(CommonCommon):
             attributes['region'] = rhsvc_uprn_return['region']
             attributes['case_type'] = rhsvc_uprn_return['caseType']
             attributes['address_level'] = rhsvc_uprn_return['addressLevel']
+            attributes['censusEstabType'] = rhsvc_uprn_return['estabType']
 
         except ClientResponseError as ex:
             if ex.status == 404:

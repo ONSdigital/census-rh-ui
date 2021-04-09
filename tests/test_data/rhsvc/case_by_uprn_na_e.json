@@ -10,5 +10,6 @@
    "addressLine3": "",
    "townName": "Carlisle",
    "postcode": "CA3 9BJ",
-   "region": "E"
+   "region": "E",
+   "estabType": "HOUSEHOLD"
 }
