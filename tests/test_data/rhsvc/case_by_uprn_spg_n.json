@@ -5,10 +5,11 @@
    "addressType": "SPG",
    "addressLevel": "E",
    "uprn": "123456",
-   "addressLine1": "1 main street",
-   "addressLine2": "upper upperingham",
+   "addressLine1": "2 Side Street",
+   "addressLine2": "Lower Loweringham",
    "addressLine3": "",
-   "townName": "upton",
-   "postcode": "UP103UP",
-   "region": "N"
+   "townName": "Lowton",
+   "postcode": "LO10 3LO",
+   "region": "N",
+   "estabType": "MARINA"
 }
