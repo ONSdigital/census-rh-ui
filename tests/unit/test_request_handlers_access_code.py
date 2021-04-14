@@ -731,6 +731,22 @@ class TestRequestHandlersAccessCode(TestHelpers):
         await self.check_post_select_address(self.post_request_access_code_select_address_ni, 'ni', 'HH', 'N')
         await self.check_post_confirm_address_input_no(self.post_request_access_code_confirm_address_ni, 'ni')
 
+    # CR-1818 ensure attributes cleared when trying new address.
+    @unittest_run_loop
+    async def test_get_request_access_code_confirm_address_where_user_changes_address(self):
+        # asks for address which is in RHSvc, but then rejects it to go round again
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address(self.post_request_access_code_select_address_en, 'en', 'HH', 'E')
+        await self.check_post_confirm_address_input_no(self.post_request_access_code_confirm_address_en, 'en')
+
+        # back round again, but this time confirms address
+        await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
+        await self.check_post_enter_address(self.post_request_access_code_enter_address_en, 'en')
+        await self.check_post_select_address_no_case(self.post_request_access_code_select_address_en, 'en', 'HH')
+        await self.check_post_confirm_address_input_yes_code_new_case(
+            self.post_request_access_code_confirm_address_en, 'en', self.rhsvc_case_by_uprn_hh_w)
+
     @unittest_run_loop
     async def test_get_request_access_code_confirm_address_data_invalid_ew(self):
         await self.check_get_enter_address(self.get_request_access_code_enter_address_en, 'en')
