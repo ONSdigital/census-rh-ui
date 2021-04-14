@@ -498,7 +498,18 @@ class CommonConfirmAddress(CommonCommon):
                             client_ip=request['client_ip'],
                             client_id=request['client_id'],
                             trace=request['trace'])
+
                 aims_uprn_return = await AddressIndex.get_ai_uprn(request, uprn)
+
+                # Ensure no session data from previous RM case used later
+                if 'case_id' in attributes:
+                    del attributes['case_id']
+                    if 'region' in attributes:
+                        del attributes['region']
+                    if 'case_type' in attributes:
+                        del attributes['case_type']
+                    if 'address_level' in attributes:
+                        del attributes['address_level']
 
                 attributes['addressLine1'] = aims_uprn_return['response']['address']['addressLine1']
                 attributes['addressLine2'] = aims_uprn_return['response']['address']['addressLine2']
