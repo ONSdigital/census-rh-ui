@@ -31,7 +31,7 @@ census_sunday_close = 20
 saturday_open = 8
 saturday_close = 13
 
-weekday_open = 16
+weekday_open = 10
 weekday_close = 20
 
 uk_zone = timezone('Europe/London')
