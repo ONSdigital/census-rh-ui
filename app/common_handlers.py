@@ -472,22 +472,75 @@ class CommonConfirmAddress(CommonCommon):
         attributes = get_session_value(session, 'attributes', user_journey, sub_user_journey)
         uprn = attributes['uprn']
 
-        uprn_ai_return = await AddressIndex.get_ai_uprn(request, uprn)
+        try:
+            rhsvc_uprn_return = await RHService.get_case_by_uprn(request, uprn)
+            logger.info('case matching uprn found in RHSvc',
+                        client_ip=request['client_ip'],
+                        client_id=request['client_id'],
+                        trace=request['trace'])
+            attributes['addressLine1'] = rhsvc_uprn_return['addressLine1']
+            attributes['addressLine2'] = rhsvc_uprn_return['addressLine2']
+            attributes['addressLine3'] = rhsvc_uprn_return['addressLine3']
+            attributes['townName'] = rhsvc_uprn_return['townName']
+            attributes['postcode'] = rhsvc_uprn_return['postcode']
+            attributes['uprn'] = rhsvc_uprn_return['uprn']
+            attributes['countryCode'] = rhsvc_uprn_return['region']
+            attributes['censusAddressType'] = rhsvc_uprn_return['addressType']
+            attributes['case_id'] = rhsvc_uprn_return['caseId']
+            attributes['region'] = rhsvc_uprn_return['region']
+            attributes['case_type'] = rhsvc_uprn_return['caseType']
+            attributes['address_level'] = rhsvc_uprn_return['addressLevel']
+            attributes['censusEstabType'] = rhsvc_uprn_return['estabType']
+
+        except ClientResponseError as ex:
+            if ex.status == 404:
+                logger.info('no case matching uprn in RHSvc - using AIMS data',
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'])
+
+                aims_uprn_return = await AddressIndex.get_ai_uprn(request, uprn)
+
+                # Ensure no session data from previous RM case used later
+                if 'case_id' in attributes:
+                    del attributes['case_id']
+                    if 'region' in attributes:
+                        del attributes['region']
+                    if 'case_type' in attributes:
+                        del attributes['case_type']
+                    if 'address_level' in attributes:
+                        del attributes['address_level']
+
+                attributes['addressLine1'] = aims_uprn_return['response']['address']['addressLine1']
+                attributes['addressLine2'] = aims_uprn_return['response']['address']['addressLine2']
+                attributes['addressLine3'] = aims_uprn_return['response']['address']['addressLine3']
+                attributes['townName'] = aims_uprn_return['response']['address']['townName']
+                attributes['postcode'] = aims_uprn_return['response']['address']['postcode']
+                attributes['uprn'] = aims_uprn_return['response']['address']['uprn']
+                attributes['countryCode'] = aims_uprn_return['response']['address']['countryCode']
+                attributes['censusEstabType'] = aims_uprn_return['response']['address']['censusEstabType']
+                census_address_type = aims_uprn_return['response']['address']['censusAddressType']
+                if census_address_type == 'NA':
+                    logger.info('AIMS addressType is NA - setting to HH',
+                                client_ip=request['client_ip'],
+                                client_id=request['client_id'],
+                                trace=request['trace'])
+                    attributes['censusAddressType'] = 'HH'
+                else:
+                    attributes['censusAddressType'] = census_address_type
+            else:
+                logger.info('error response from RHSvc',
+                            client_ip=request['client_ip'],
+                            client_id=request['client_id'],
+                            trace=request['trace'],
+                            status_code=ex.status)
+                raise ex
 
         try:
             room_number = attributes['roomNumber']
         except KeyError:
             room_number = None
 
-        attributes['addressLine1'] = uprn_ai_return['response']['address']['addressLine1']
-        attributes['addressLine2'] = uprn_ai_return['response']['address']['addressLine2']
-        attributes['addressLine3'] = uprn_ai_return['response']['address']['addressLine3']
-        attributes['townName'] = uprn_ai_return['response']['address']['townName']
-        attributes['postcode'] = uprn_ai_return['response']['address']['postcode']
-        attributes['uprn'] = uprn_ai_return['response']['address']['uprn']
-        attributes['countryCode'] = uprn_ai_return['response']['address']['countryCode']
-        attributes['censusEstabType'] = uprn_ai_return['response']['address']['censusEstabType']
-        attributes['censusAddressType'] = uprn_ai_return['response']['address']['censusAddressType']
         attributes['roomNumber'] = room_number
         session.changed()
 
@@ -508,6 +561,7 @@ class CommonConfirmAddress(CommonCommon):
         }
 
     async def post(self, request):
+        tracking = {"client_ip": request['client_ip'], "client_id": request['client_id'], "trace": request['trace']}
 
         display_region = request.match_info['display_region']
         user_journey = request.match_info['user_journey']
@@ -527,11 +581,7 @@ class CommonConfirmAddress(CommonCommon):
         try:
             address_confirmation = data['form-confirm-address']
         except KeyError:
-            logger.info('address confirmation error',
-                        client_ip=request['client_ip'],
-                        client_id=request['client_id'],
-                        trace=request['trace'],
-                        region_of_site=display_region)
+            logger.info('address confirmation error', **tracking, region_of_site=display_region)
             if display_region == 'cy':
                 flash(request, NO_SELECTION_CHECK_MSG_CY)
             else:
@@ -545,43 +595,21 @@ class CommonConfirmAddress(CommonCommon):
 
         if address_confirmation == 'yes':
 
-            try:
-                census_address_type_value = attributes['censusAddressType']
-                if census_address_type_value == 'NA':
-                    logger.info('censusAddressType is NA',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
-                                user_selection=address_confirmation)
-                    raise HTTPFound(
-                        request.app.router['CommonCallContactCentre:get'].url_for(
-                            display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
-                elif (census_address_type_value == 'CE') and \
-                        (sub_user_journey == 'continuation-questionnaire'):
-                    logger.info('continuation form for a CE - rejecting',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
-                                sub_journey=sub_user_journey,
-                                census_addr_type=census_address_type_value)
-                    raise HTTPFound(
-                        request.app.router['RequestContinuationNotAHousehold:get'].url_for(
-                            display_region=display_region))
-            except KeyError:
-                logger.info('unable to check censusAddressType',
-                            client_ip=request['client_ip'], client_id=request['client_id'], trace=request['trace'])
+            if (attributes['censusAddressType'] == 'CE') and (sub_user_journey == 'continuation-questionnaire'):
+                logger.info('continuation form for a CE - rejecting',
+                            **tracking,
+                            sub_journey=sub_user_journey,
+                            census_addr_type=attributes['censusAddressType'])
                 raise HTTPFound(
-                    request.app.router['CommonCallContactCentre:get'].url_for(
-                        display_region=display_region, user_journey=user_journey, error='unable-to-match-address'))
+                    request.app.router['RequestContinuationNotAHousehold:get'].url_for(
+                        display_region=display_region))
 
             try:
                 country_code_value = attributes['countryCode']
                 uprn = attributes['uprn']
                 if country_code_value == 'S':
                     logger.info('address is in Scotland',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 country_code_found=country_code_value,
                                 uprn_value=uprn)
                     raise HTTPFound(
@@ -589,9 +617,7 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
                 elif country_code_value == 'N' and display_region != 'ni':
                     logger.info('address is in Northern Ireland but not display_region ni',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
@@ -600,10 +626,8 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
                 elif display_region == 'ni' and country_code_value == 'W':
                     logger.info('address is in Wales but display_region ni',
-                                client_ip=request['client_ip'],
                                 country_code_found=country_code_value,
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
                     raise HTTPFound(
@@ -611,9 +635,7 @@ class CommonConfirmAddress(CommonCommon):
                         url_for(display_region=display_region, user_journey=user_journey))
                 elif display_region == 'ni' and country_code_value == 'E':
                     logger.info('address is in England but display_region ni',
-                                client_ip=request['client_ip'],
-                                client_id=request['client_id'],
-                                trace=request['trace'],
+                                **tracking,
                                 country_code_found=country_code_value,
                                 region_of_site=display_region,
                                 uprn_value=uprn)
@@ -653,22 +675,16 @@ class CommonConfirmAddress(CommonCommon):
                     hashed_uac_value = session['case']['uacHash']
                     if ex.status == 404:
                         logger.info('uac linking error - unable to find uac (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'],
-                                    client_id=request['client_id'],
-                                    trace=request['trace'],
+                                    **tracking,
                                     status_code=ex.status, uac_hashed=hashed_uac_value)
                     elif ex.status == 400:
                         logger.info('uac linking error - invalid request (' + str(ex.status) + ')',
-                                    client_ip=request['client_ip'],
-                                    client_id=request['client_id'],
-                                    trace=request['trace'],
+                                    **tracking,
                                     status_code=ex.status,
                                     uac_hashed=hashed_uac_value)
                     else:
                         logger.error('uac linking error - unknown issue (' + str(ex.status) + ')',
-                                     client_ip=request['client_ip'],
-                                     client_id=request['client_id'],
-                                     trace=request['trace'],
+                                     **tracking,
                                      status_code=ex.status,
                                      uac_hashed=hashed_uac_value)
 
@@ -683,56 +699,36 @@ class CommonConfirmAddress(CommonCommon):
                             display_region=display_region, user_journey=user_journey, error=cc_error))
 
             elif user_journey == 'request':
-                try:
-                    uprn_return = await RHService.get_case_by_uprn(request, attributes['uprn'])
-                    attributes['case_id'] = uprn_return['caseId']
-                    attributes['region'] = uprn_return['region']
-                    attributes['case_type'] = uprn_return['caseType']
-                    attributes['address_level'] = uprn_return['addressLevel']
-                    if uprn_return['caseType'] == 'CE' and uprn_return['addressLevel'] == 'U':
+                if attributes.get('case_id'):
+                    if attributes['case_type'] == 'CE' and attributes['address_level'] == 'U':
                         attributes['individual'] = True
                     session.changed()
 
                     await self.request_confirm_address_routing(request, user_journey, sub_user_journey,
                                                                display_region,
-                                                               uprn_return['caseType'],
-                                                               uprn_return['addressLevel'],
+                                                               attributes['case_type'],
+                                                               attributes['address_level'],
                                                                attributes['individual'])
+                else:
+                    logger.info('requesting new case', **tracking)
+                    try:
+                        case_creation_return = await RHService.post_case_create(request, attributes)
+                        attributes['case_id'] = case_creation_return['caseId']
+                        attributes['region'] = case_creation_return['region']
+                        attributes['case_type'] = case_creation_return['caseType']
+                        attributes['address_level'] = case_creation_return['addressLevel']
+                        if case_creation_return['caseType'] == 'CE' and case_creation_return['addressLevel'] == 'U':
+                            attributes['individual'] = True
+                        session.changed()
 
-                except ClientResponseError as ex:
-                    if ex.status == 404:
-                        logger.info('get cases by uprn error - unable to match uprn (404)',
-                                    client_ip=request['client_ip'],
-                                    client_id=request['client_id'],
-                                    trace=request['trace'],
-                                    unmatched_uprn=attributes['uprn'])
-                        logger.info('requesting new case',
-                                    client_ip=request['client_ip'],
-                                    client_id=request['client_id'],
-                                    trace=request['trace'])
-                        try:
-                            case_creation_return = await RHService.post_case_create(request, attributes)
-                            attributes['case_id'] = case_creation_return['caseId']
-                            attributes['region'] = case_creation_return['region']
-                            attributes['case_type'] = case_creation_return['caseType']
-                            attributes['address_level'] = case_creation_return['addressLevel']
-                            if case_creation_return['caseType'] == 'CE' and case_creation_return['addressLevel'] == 'U':
-                                attributes['individual'] = True
-                            session.changed()
+                        await self.request_confirm_address_routing(request, user_journey, sub_user_journey,
+                                                                   display_region,
+                                                                   case_creation_return['caseType'],
+                                                                   case_creation_return['addressLevel'],
+                                                                   attributes['individual'])
 
-                            await self.request_confirm_address_routing(request, user_journey, sub_user_journey,
-                                                                       display_region,
-                                                                       case_creation_return['caseType'],
-                                                                       case_creation_return['addressLevel'],
-                                                                       attributes['individual'])
-
-                        except ClientResponseError as ex:
-                            logger.warn('error requesting new case',
-                                        client_ip=request['client_ip'],
-                                        client_id=request['client_id'],
-                                        trace=request['trace'])
-                            raise ex
-                    else:
+                    except ClientResponseError as ex:
+                        logger.warn('error requesting new case', **tracking)
                         raise ex
 
         elif address_confirmation == 'no':
@@ -744,11 +740,7 @@ class CommonConfirmAddress(CommonCommon):
 
         else:
             # catch all just in case, should never get here
-            logger.info('address confirmation error',
-                        client_ip=request['client_ip'],
-                        client_id=request['client_id'],
-                        trace=request['trace'],
-                        user_selection=address_confirmation)
+            logger.info('address confirmation error', **tracking, user_selection=address_confirmation)
             flash(request, NO_SELECTION_CHECK_MSG)
             raise HTTPFound(
                 request.app.router['CommonConfirmAddress:get'].url_for(

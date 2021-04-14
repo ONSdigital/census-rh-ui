@@ -5,10 +5,11 @@
    "addressType": "HH",
    "addressLevel": "E",
    "uprn": "123456",
-   "addressLine1": "1 main street",
-   "addressLine2": "upper upperingham",
+   "addressLine1": "1 Main Street",
+   "addressLine2": "Upper Upperingham",
    "addressLine3": "",
-   "townName": "upton",
-   "postcode": "UP103UP",
-   "region": "E"
+   "townName": "Upton",
+   "postcode": "UP10 3UP",
+   "region": "E",
+   "estabType": "HOUSEHOLD"
 }

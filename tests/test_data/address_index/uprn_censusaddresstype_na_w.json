@@ -1,0 +1,27 @@
+{
+    "apiVersion": "1.0.0-SNAPSHOT",
+    "dataVersion": "72",
+    "response": {
+        "address": {
+            "uprn": "10008681962",
+            "formattedAddress": "Holiday Wales Accommodation, Brampton Road, Carlisle, CA3 9BJ",
+            "addressLine1": "Holiday Wales Accommodation",
+            "addressLine2": "Brampton Road",
+            "addressLine3": "",
+            "townName": "Carlisle",
+            "postcode": "CA3 9BJ",
+            "foundAddressType": "NAG",
+            "censusAddressType": "NA",
+            "censusEstabType": "NA",
+            "countryCode": "W"
+        },
+        "addressType": "PAF",
+        "historical": true,
+        "epoch": ""
+    },
+    "status": {
+        "code": 200,
+        "message": "Ok"
+    },
+    "errors": []
+}

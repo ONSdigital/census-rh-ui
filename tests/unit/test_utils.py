@@ -16,6 +16,14 @@ class TestUtils(RHTestCase):
         ProcessPostcode.validate_postcode(postcode, locale)
         # Nothing happens
 
+    def test_validate_postcode_valid_with_unicode(self):
+        postcode = 'BS２ ０FW'
+        locale = 'en'
+
+        # When validate_postcode is called
+        ProcessPostcode.validate_postcode(postcode, locale)
+        # Nothing happens
+
     def test_validate_postcode_empty(self):
         postcode = ''
         locale = 'en'

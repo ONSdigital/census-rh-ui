@@ -5,10 +5,11 @@
    "addressType": "CE",
    "addressLevel": "U",
    "uprn": "123456",
-   "addressLine1": "1 main street",
-   "addressLine2": "upper upperingham",
+   "addressLine1": "Halls Of Residence",
+   "addressLine2": "Lowton University",
    "addressLine3": "",
-   "townName": "upton",
-   "postcode": "UP103UP",
-   "region": "N"
+   "townName": "Lowton",
+   "postcode": "LO10 7LO",
+   "region": "N",
+   "estabType": "HOTEL"
 }

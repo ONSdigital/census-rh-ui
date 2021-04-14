@@ -8,6 +8,7 @@ from .exceptions import InactiveCaseError, InvalidEqPayLoad, InvalidDataError, I
 from aiohttp.web import HTTPFound
 from datetime import datetime, date
 from pytz import timezone, utc
+from unicodedata import normalize
 
 from sdc.crypto.encrypter import encrypt
 from .eq import EqPayloadConstructor
@@ -203,6 +204,7 @@ class ProcessPostcode:
             postcode = postcode.replace(character, '')
 
         postcode = postcode.upper()
+        postcode = normalize('NFKD', postcode).encode('ascii', 'ignore').decode('utf8')
 
         if len(postcode) == 0:
             if locale == 'cy':
