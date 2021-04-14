@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-04-14 11:42+0100\n"
+"POT-Creation-Date: 2021-03-29 12:20+0100\n"
 "PO-Revision-Date: 2019-08-30 11:45+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -263,7 +263,7 @@ msgstr ""
 #: app/templates/request-common-enter-name.html:89
 #: app/templates/request-common-enter-name.html:118
 #: app/templates/request-common-enter-name.html:141
-#: app/templates/web-form.html:168
+#: app/templates/web-form.html:167
 msgid "You have {x} character remaining"
 msgstr ""
 
@@ -272,7 +272,7 @@ msgstr ""
 #: app/templates/request-common-enter-name.html:90
 #: app/templates/request-common-enter-name.html:119
 #: app/templates/request-common-enter-name.html:142
-#: app/templates/web-form.html:169
+#: app/templates/web-form.html:168
 msgid "You have {x} characters remaining"
 msgstr ""
 
@@ -1355,39 +1355,39 @@ msgstr ""
 msgid "If you need further assistance, please %(open)scontact us%(close)s"
 msgstr ""
 
-#: app/templates/web-form.html:25 app/templates/webchat-form.html:68
+#: app/templates/web-form.html:25 app/templates/webchat-form.html:69
 msgid "England"
 msgstr ""
 
-#: app/templates/web-form.html:32 app/templates/webchat-form.html:75
+#: app/templates/web-form.html:32 app/templates/webchat-form.html:76
 msgid "Wales"
 msgstr ""
 
-#: app/templates/web-form.html:39 app/templates/webchat-form.html:82
+#: app/templates/web-form.html:39 app/templates/webchat-form.html:83
 msgid "Northern Ireland"
 msgstr ""
 
-#: app/templates/web-form.html:51 app/templates/webchat-form.html:94
+#: app/templates/web-form.html:51 app/templates/webchat-form.html:95
 msgid "I don’t have everything I need to complete my census"
 msgstr ""
 
-#: app/templates/web-form.html:58 app/templates/webchat-form.html:101
+#: app/templates/web-form.html:58 app/templates/webchat-form.html:102
 msgid "I am having technical difficulties"
 msgstr ""
 
-#: app/templates/web-form.html:65 app/templates/webchat-form.html:108
+#: app/templates/web-form.html:65 app/templates/webchat-form.html:109
 msgid "I need help with my census form"
 msgstr ""
 
-#: app/templates/web-form.html:72 app/templates/webchat-form.html:115
+#: app/templates/web-form.html:72 app/templates/webchat-form.html:116
 msgid "I have a complaint"
 msgstr ""
 
-#: app/templates/web-form.html:79 app/templates/webchat-form.html:122
+#: app/templates/web-form.html:79 app/templates/webchat-form.html:123
 msgid "I need help with my address"
 msgstr ""
 
-#: app/templates/web-form.html:86 app/templates/webchat-form.html:129
+#: app/templates/web-form.html:86 app/templates/webchat-form.html:130
 msgid "Something else"
 msgstr ""
 
@@ -1401,7 +1401,7 @@ msgid "Enter detail of your issue"
 msgstr ""
 
 #: app/templates/web-form.html:106 app/templates/webchat-form.html:25
-#: app/templates/webchat-form.html:153 app/templates/webchat-form.html:170
+#: app/templates/webchat-form.html:154 app/templates/webchat-form.html:171
 msgid "Enter your name"
 msgstr ""
 
@@ -1417,13 +1417,13 @@ msgstr ""
 msgid "Web form"
 msgstr ""
 
-#: app/templates/web-form.html:137 app/templates/webchat-form.html:190
-#: app/templates/webchat-form.html:204
+#: app/templates/web-form.html:137 app/templates/webchat-form.html:191
+#: app/templates/webchat-form.html:205
 msgid "Select your country"
 msgstr ""
 
-#: app/templates/web-form.html:148 app/templates/webchat-form.html:224
-#: app/templates/webchat-form.html:238
+#: app/templates/web-form.html:148 app/templates/webchat-form.html:225
+#: app/templates/webchat-form.html:239
 msgid "What do you need help with?"
 msgstr ""
 
@@ -1431,31 +1431,27 @@ msgstr ""
 msgid "Please provide more detail"
 msgstr ""
 
-#: app/templates/web-form.html:164
-msgid "Include your address and postcode so we can help you"
-msgstr ""
-
-#: app/templates/web-form.html:176
+#: app/templates/web-form.html:175
 msgid "Your contact details"
 msgstr ""
 
-#: app/templates/web-form.html:185
+#: app/templates/web-form.html:184
 msgid "Name"
 msgstr ""
 
-#: app/templates/web-form.html:200
+#: app/templates/web-form.html:199
 msgid "Email address"
 msgstr ""
 
-#: app/templates/web-form.html:201
+#: app/templates/web-form.html:200
 msgid "We will only use this to send you a reply"
 msgstr ""
 
-#: app/templates/web-form.html:211
+#: app/templates/web-form.html:210
 msgid "Send message"
 msgstr ""
 
-#: app/templates/web-form.html:219 app/templates/webchat-form.html:259
+#: app/templates/web-form.html:218 app/templates/webchat-form.html:260
 #, python-format
 msgid ""
 "Information about what we do with your personal data is available in our "
@@ -1484,25 +1480,30 @@ msgstr ""
 msgid "Sunday & Bank Holidays, closed"
 msgstr ""
 
-#: app/templates/webchat-form.html:52
+#: app/templates/webchat-form.html:47
+#, python-format
+msgid "Census weekend (20 - 21 March), %(open_time)s to %(close_time)s"
+msgstr ""
+
+#: app/templates/webchat-form.html:53
 msgid "Javascript disabled"
 msgstr ""
 
-#: app/templates/webchat-form.html:54
+#: app/templates/webchat-form.html:55
 msgid ""
 "Javascript on your browser is disabled. To start a Webchat session "
 "javascript needs to be enabled on your browser."
 msgstr ""
 
-#: app/templates/webchat-form.html:56
+#: app/templates/webchat-form.html:57
 msgid "Get Help"
 msgstr ""
 
-#: app/templates/webchat-form.html:137 app/templates/webchat-window.html:5
+#: app/templates/webchat-form.html:138 app/templates/webchat-window.html:5
 msgid "Web chat"
 msgstr ""
 
-#: app/templates/webchat-form.html:252
+#: app/templates/webchat-form.html:253
 msgid "Start web chat"
 msgstr ""
 
@@ -1536,8 +1537,5 @@ msgid "There are %(errorcount)s problems with your answer"
 msgstr ""
 
 #~ msgid "Sunday, closed"
-#~ msgstr ""
-
-#~ msgid "Census weekend (20 - 21 March), %(open_time)s to %(close_time)s"
 #~ msgstr ""
 
