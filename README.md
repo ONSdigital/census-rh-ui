@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/ONSdigital/census-rh-ui.svg?branch=master)](https://travis-ci.org/ONSdigital/census-rh-ui)
 [![codecov](https://codecov.io/gh/ONSdigital/census-rh-ui/branch/master/graph/badge.svg)](https://codecov.io/gh/ONSdigital/census-rh-ui)
 
+
 # Respondent Home Python Web Application
 Respondent Home is part of ONS's Census Survey Data Collection platform. It allows users to validate their Internet Access Code (IAC) and forwards
 them to the [ONS eQ Survey Runner](https://github.com/ONSdigital/eq-survey-runner) upon successful validation.
