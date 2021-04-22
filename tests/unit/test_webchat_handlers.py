@@ -43,28 +43,28 @@ class TestWebChatHandlers(RHTestCase):
         self.should_be_closed(2021, 3, 21, 20, 1)   # just after closing
 
     def test_check_open_weekday_open(self):
-        self.should_be_open(2019, 6, 17, 17, 30)    # 2019 BST summer
-        self.should_be_open(2020, 8, 12, 15, 1)     # 2020 BST summer just after opening
+        self.should_be_open(2019, 6, 17, 11, 30)    # 2019 BST summer
+        self.should_be_open(2020, 8, 12, 9, 1)     # 2020 BST summer just after opening
         self.should_be_open(2020, 8, 12, 18, 59)    # 2020 BST summer just before closing
-        self.should_be_open(2020, 11, 10, 16, 1)    # 2020 GMT winter just after opening
+        self.should_be_open(2020, 11, 10, 10, 1)    # 2020 GMT winter just after opening
         self.should_be_open(2020, 11, 10, 19, 59)   # 2020 GMT winter just before closing
-        self.should_be_open(2021, 3, 26, 16, 1)     # 2021 GMT spring just after opening
+        self.should_be_open(2021, 3, 26, 10, 1)     # 2021 GMT spring just after opening
         self.should_be_open(2021, 3, 26, 17, 30)    # 2021 GMT spring mid evening
         self.should_be_open(2021, 3, 26, 19, 59)    # 2021 GMT spring just before closing
-        self.should_be_open(2021, 3, 29, 16, 1)     # 2021 BST summer just after opening
+        self.should_be_open(2021, 3, 29, 10, 1)     # 2021 BST summer just after opening
         self.should_be_open(2021, 3, 29, 18, 30)    # 2021 BST summer mid evening
         self.should_be_open(2021, 3, 29, 18, 59)    # 2021 BST summer just before closing
 
     def test_check_open_weekday_closed(self):
-        self.should_be_closed(2019, 6, 16, 16, 30)  # 2019 BST summer before opening
+        self.should_be_closed(2019, 6, 16, 10, 30)  # 2019 BST summer before opening
         self.should_be_closed(2019, 6, 16, 19, 30)  # 2019 BST summer after closing
-        self.should_be_closed(2020, 8, 12, 14, 59)  # 2020 BST summer just before opening
+        self.should_be_closed(2020, 8, 12, 8, 59)  # 2020 BST summer just before opening
         self.should_be_closed(2020, 8, 12, 19, 1)   # 2020 BST summer just after closing
-        self.should_be_closed(2020, 11, 10, 15, 59) # 2020 GMT winter just before opening
+        self.should_be_closed(2020, 11, 10, 9, 59) # 2020 GMT winter just before opening
         self.should_be_closed(2020, 11, 10, 20, 1)  # 2020 GMT winter just after closing
-        self.should_be_closed(2021, 3, 26, 15, 59)  # 2021 GMT spring just before opening
+        self.should_be_closed(2021, 3, 26, 9, 59)  # 2021 GMT spring just before opening
         self.should_be_closed(2021, 3, 26, 20, 1)   # 2021 GMT spring just after closing
-        self.should_be_closed(2021, 3, 29, 14, 59)  # 2021 BST summer just before opening
+        self.should_be_closed(2021, 3, 29, 8, 59)  # 2021 BST summer just before opening
         self.should_be_closed(2021, 3, 29, 19, 1)   # 2021 BST summer just after closing
 
     def test_check_open_saturday_open(self):
