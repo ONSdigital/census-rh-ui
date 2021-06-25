@@ -58,13 +58,13 @@ class TestWebChatHandlers(RHTestCase):
     def test_check_open_weekday_closed(self):
         self.should_be_closed(2019, 6, 16, 10, 30)  # 2019 BST summer before opening
         self.should_be_closed(2019, 6, 16, 19, 30)  # 2019 BST summer after closing
-        self.should_be_closed(2020, 8, 12, 8, 59)  # 2020 BST summer just before opening
+        self.should_be_closed(2020, 8, 12, 6, 59)  # 2020 BST summer just before opening
         self.should_be_closed(2020, 8, 12, 19, 1)   # 2020 BST summer just after closing
-        self.should_be_closed(2020, 11, 10, 9, 59) # 2020 GMT winter just before opening
+        self.should_be_closed(2020, 11, 10, 7, 59) # 2020 GMT winter just before opening
         self.should_be_closed(2020, 11, 10, 20, 1)  # 2020 GMT winter just after closing
-        self.should_be_closed(2021, 3, 26, 9, 59)  # 2021 GMT spring just before opening
+        self.should_be_closed(2021, 3, 26, 7, 59)  # 2021 GMT spring just before opening
         self.should_be_closed(2021, 3, 26, 20, 1)   # 2021 GMT spring just after closing
-        self.should_be_closed(2021, 3, 29, 8, 59)  # 2021 BST summer just before opening
+        self.should_be_closed(2021, 3, 29, 6, 59)  # 2021 BST summer just before opening
         self.should_be_closed(2021, 3, 29, 19, 1)   # 2021 BST summer just after closing
 
     def test_check_open_saturday_open(self):
