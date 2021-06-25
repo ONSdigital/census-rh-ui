@@ -44,14 +44,14 @@ class TestWebChatHandlers(RHTestCase):
 
     def test_check_open_weekday_open(self):
         self.should_be_open(2019, 6, 17, 11, 30)    # 2019 BST summer
-        self.should_be_open(2020, 8, 12, 9, 1)     # 2020 BST summer just after opening
+        self.should_be_open(2020, 8, 12, 7, 1)     # 2020 BST summer just after opening
         self.should_be_open(2020, 8, 12, 18, 59)    # 2020 BST summer just before closing
-        self.should_be_open(2020, 11, 10, 10, 1)    # 2020 GMT winter just after opening
+        self.should_be_open(2020, 11, 10, 8, 1)    # 2020 GMT winter just after opening
         self.should_be_open(2020, 11, 10, 19, 59)   # 2020 GMT winter just before closing
-        self.should_be_open(2021, 3, 26, 10, 1)     # 2021 GMT spring just after opening
+        self.should_be_open(2021, 3, 26, 8, 1)     # 2021 GMT spring just after opening
         self.should_be_open(2021, 3, 26, 17, 30)    # 2021 GMT spring mid evening
         self.should_be_open(2021, 3, 26, 19, 59)    # 2021 GMT spring just before closing
-        self.should_be_open(2021, 3, 29, 10, 1)     # 2021 BST summer just after opening
+        self.should_be_open(2021, 3, 29, 7, 1)     # 2021 BST summer just after opening
         self.should_be_open(2021, 3, 29, 18, 30)    # 2021 BST summer mid evening
         self.should_be_open(2021, 3, 29, 18, 59)    # 2021 BST summer just before closing
 
