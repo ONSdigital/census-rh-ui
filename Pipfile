@@ -9,7 +9,7 @@ aiohttp-jinja2 = "~=1.2.0"
 aiohttp-session = {version = "~=2.9.0", extras = ["aioredis"]}
 aiohttp-utils = "~=3.1.1"
 aiohttp = "~=3.6.2"
-babel = "~=2.8.0"
+babel = "~=2.9.1"
 cchardet = "~=2.1.6"
 cryptography = "~=3.2"
 envparse = "~=0.2.0"
